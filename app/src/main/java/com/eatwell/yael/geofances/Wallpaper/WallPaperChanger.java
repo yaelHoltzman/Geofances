@@ -1,8 +1,12 @@
-package com.eatwell.yael.geofances;
+package com.eatwell.yael.geofances.Wallpaper;
 
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+
+import com.eatwell.yael.geofances.Firebase_Utils.MyStorageActivity;
+import com.eatwell.yael.geofances.Wallpaper.WallPaperChangerI;
+
 import java.io.IOException;
 
 /*
