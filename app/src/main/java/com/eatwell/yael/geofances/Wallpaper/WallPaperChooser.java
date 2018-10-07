@@ -1,6 +1,9 @@
-package com.eatwell.yael.geofances;
+package com.eatwell.yael.geofances.Wallpaper;
 
 import android.support.v4.app.Fragment;
+
+import com.eatwell.yael.geofances.Goal.Goal;
+import com.eatwell.yael.geofances.User.User;
 
 public class WallPaperChooser extends Fragment implements WallPaperChooserI {
 

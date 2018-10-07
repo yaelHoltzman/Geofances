@@ -1,4 +1,4 @@
-package com.eatwell.yael.geofances;
+package com.eatwell.yael.geofances.Firebase_Utils;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -6,14 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.google.android.gms.common.ConnectionResult;
+import com.eatwell.yael.geofances.Utils.Permission_Checker;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
@@ -24,7 +21,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
-import java.util.Map;
 
 public class GeofenceManager extends AppCompatActivity {
 

@@ -33,13 +33,13 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <service android:name=".GeofenceTrasitionService" />
-        <service android:name=".NotificationSender" />
+        <service android:name=".Firebase_Utils.GeofenceTrasitionService" />
+        <service android:name=".Notification.NotificationSender" />
 
-        <activity android:name=".Goal_Setting" />
+        <activity android:name=".UI.Goal_Setting" />
 
         <service
-            android:name=".MyFirebaseInstanceIdService"
+            android:name=".Firebase_Utils.MyFirebaseInstanceIdService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -49,7 +49,7 @@
         <uses-library android:name="com.google.android.maps" />
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".Firebase_Utils.MyFirebaseMessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -57,22 +57,24 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".GeofenceManager" />
-        <activity android:name=".Permission_Checker" />
-        <activity android:name=".LocationSelector" />
-        <activity android:name=".StartActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".Firebase_Utils.GeofenceManager" />
+        <activity android:name=".Utils.Permission_Checker" />
+        <activity android:name=".Utils.LocationSelector" />
+        <activity android:name=".UI.StartActivity"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
-            android:name=".LoginActivity"
-            android:label="title_activity_login" />
-        <activity android:name=".SignUp" />
-        <activity android:name=".ResetPassword" />
-        <activity android:name=".Notification"></activity>
+            android:name=".UI.LoginActivity"
+            android:label="title_activity_login">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+
+        <activity android:name=".UI.SignUp" />
+        <activity android:name=".UI.ResetPassword" />
+        <activity android:name=".UI.Notification"></activity>
     </application>
 
 </manifest>

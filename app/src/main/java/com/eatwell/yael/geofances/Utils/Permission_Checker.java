@@ -1,4 +1,4 @@
-package com.eatwell.yael.geofances;
+package com.eatwell.yael.geofances.Utils;
 
 import android.Manifest;
 import android.app.Activity;

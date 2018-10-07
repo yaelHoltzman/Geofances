@@ -1,4 +1,4 @@
-package com.eatwell.yael.geofances;
+package com.eatwell.yael.geofances.UI;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import com.eatwell.yael.geofances.Utils.LocationSelector;
+import com.eatwell.yael.geofances.R;
 
 public class Goal_Setting extends AppCompatActivity {
 

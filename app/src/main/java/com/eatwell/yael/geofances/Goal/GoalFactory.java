@@ -1,8 +1,12 @@
-package com.eatwell.yael.geofances;
+package com.eatwell.yael.geofances.Goal;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.eatwell.yael.geofances.Goal.Goal;
+import com.eatwell.yael.geofances.Goal.Goal_WeightLoss;
+import com.eatwell.yael.geofances.UI.Goal_Setting;
 
 import java.util.ArrayList;
 import java.util.Map;

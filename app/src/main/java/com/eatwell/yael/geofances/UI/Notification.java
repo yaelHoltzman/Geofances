@@ -1,9 +1,11 @@
-package com.eatwell.yael.geofances;
+package com.eatwell.yael.geofances.UI;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.eatwell.yael.geofances.R;
 
 public class Notification extends AppCompatActivity {
 

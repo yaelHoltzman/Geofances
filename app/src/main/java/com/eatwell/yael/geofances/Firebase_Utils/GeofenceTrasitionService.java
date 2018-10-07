@@ -1,9 +1,11 @@
-package com.eatwell.yael.geofances;
+package com.eatwell.yael.geofances.Firebase_Utils;
 
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
+import com.eatwell.yael.geofances.Notification.NotificationChooser;
+import com.eatwell.yael.geofances.Notification.NotificationChooserI;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofenceStatusCodes;
 import com.google.android.gms.location.GeofencingEvent;

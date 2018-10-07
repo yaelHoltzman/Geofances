@@ -1,6 +1,8 @@
-package com.eatwell.yael.geofances;
+package com.eatwell.yael.geofances.Goal;
 
 import android.util.Pair;
+
+import com.eatwell.yael.geofances.Goal.Goal;
 
 import java.util.HashMap;
 
@@ -25,13 +27,13 @@ public class Goal_WeightLoss implements Goal {
 
 
         Pair<String, String> keyPair5 = new Pair<>("Home", "GEOFENCE_TRANSITION_ENTER");
-        wallPPUrls.put(keyPair5, "test1");
+        wallPPUrls.put(keyPair5, "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/weightLoss1.jpg?alt=media&token=40929684-756e-485b-bf4f-421a0ca50b7d");
         Pair<String, String> keyPair6 = new Pair<>("Home", "GEOFENCE_TRANSITION_EXIT");
-        wallPPUrls.put(keyPair6, "test2");
+        wallPPUrls.put(keyPair6, "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/weightLoss2.jpg?alt=media&token=6568cee1-c824-43c2-96ce-3c056dc6adb9");
         Pair<String, String> keyPair7 = new Pair<>("Work", "GEOFENCE_TRANSITION_ENTER");
-        wallPPUrls.put(keyPair7, "test3");
+        wallPPUrls.put(keyPair7, "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/weightLoss3.jpg?alt=media&token=326f9f85-1523-4804-b83f-d7c539f0e7f2");
         Pair<String, String> keyPair8 = new Pair<>("Work", "GEOFENCE_TRANSITION_EXIT");
-        wallPPUrls.put(keyPair8, "test4");
+        wallPPUrls.put(keyPair8, "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/weightLoss4.jpg?alt=media&token=d7f86776-5884-4f79-8a3c-f3765b473d60");
 
     }
 

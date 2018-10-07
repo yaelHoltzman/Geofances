@@ -1,4 +1,4 @@
-package com.eatwell.yael.geofances;
+package com.eatwell.yael.geofances.Firebase_Utils;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;

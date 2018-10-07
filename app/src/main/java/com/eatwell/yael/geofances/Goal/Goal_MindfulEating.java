@@ -1,10 +1,10 @@
-package com.eatwell.yael.geofances;
+package com.eatwell.yael.geofances.Goal;
 
 import android.util.Pair;
 
 import java.util.HashMap;
 
-public class Goal_MindfulEating implements Goal{
+public class Goal_MindfulEating implements Goal {
 
     private HashMap<Pair<String, String>, String> notifications;
     private HashMap<Pair<String, String>, String> wallPPUrls;
@@ -24,13 +24,13 @@ public class Goal_MindfulEating implements Goal{
         notifications.put(keyPair4, "go excersice if you have time");
 
         Pair<String, String> keyPair5 = new Pair<>("Home", "GEOFENCE_TRANSITION_ENTER");
-        wallPPUrls.put(keyPair5, "test1");
+        wallPPUrls.put(keyPair5, "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/Mindful1.jpg?alt=media&token=e5ea2288-df11-4c16-bbb2-34404acea7f6");
         Pair<String, String> keyPair6 = new Pair<>("Home", "GEOFENCE_TRANSITION_EXIT");
-        wallPPUrls.put(keyPair6, "test2");
+        wallPPUrls.put(keyPair6, "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/Mindful2.jpg?alt=media&token=a831df41-71f0-4a63-9b82-30da5e1b6c94");
         Pair<String, String> keyPair7 = new Pair<>("Work", "GEOFENCE_TRANSITION_ENTER");
-        wallPPUrls.put(keyPair7, "test3");
+        wallPPUrls.put(keyPair7, "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/Mindful3.jpg?alt=media&token=4f0db69d-48cd-4043-bdb7-c80429d0af65");
         Pair<String, String> keyPair8 = new Pair<>("Work", "GEOFENCE_TRANSITION_EXIT");
-        wallPPUrls.put(keyPair8, "test4");
+        wallPPUrls.put(keyPair8, "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/Mindful4.jpg?alt=media&token=53386b53-f107-40ef-bc7f-cd4d65322b42");
 
     }
 

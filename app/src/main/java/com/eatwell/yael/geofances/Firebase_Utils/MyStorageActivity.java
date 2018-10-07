@@ -1,4 +1,4 @@
-package com.eatwell.yael.geofances;
+package com.eatwell.yael.geofances.Firebase_Utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -1,4 +1,4 @@
-package com.eatwell.yael.geofances;
+package com.eatwell.yael.geofances.Notification;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import com.eatwell.yael.geofances.R;
 
 
 public class NotificationSender extends IntentService {
@@ -26,12 +28,12 @@ public class NotificationSender extends IntentService {
         Log.i(TAG, "sendNotification: " + msg );
 
         // Intent to start the main Activity
-        Intent notificationIntent = com.eatwell.yael.geofances.Notification.makeNotificationIntent(
+        Intent notificationIntent = com.eatwell.yael.geofances.UI.Notification.makeNotificationIntent(
                 getApplicationContext(), msg
         );
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(com.eatwell.yael.geofances.Notification.class);
+        stackBuilder.addParentStack(com.eatwell.yael.geofances.UI.Notification.class);
         stackBuilder.addNextIntent(notificationIntent);
         PendingIntent notificationPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 

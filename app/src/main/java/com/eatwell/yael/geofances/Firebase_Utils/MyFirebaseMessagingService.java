@@ -1,19 +1,18 @@
-package com.eatwell.yael.geofances;
+package com.eatwell.yael.geofances.Firebase_Utils;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.os.Build;
-import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.eatwell.yael.geofances.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -66,7 +65,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         (Context.NOTIFICATION_SERVICE);
             }
 
-            intent = new Intent(this, com.eatwell.yael.geofances.Notification.class);
+            intent = new Intent(this, com.eatwell.yael.geofances.UI.Notification.class);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 int importance = NotificationManager.IMPORTANCE_HIGH;
                 if (mChannel == null) {

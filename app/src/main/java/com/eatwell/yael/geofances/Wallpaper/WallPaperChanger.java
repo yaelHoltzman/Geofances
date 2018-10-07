@@ -43,24 +43,4 @@ public class WallPaperChanger implements WallPaperChangerI {
             e.printStackTrace();
         }
     }
-
-
-    /*
-    private void setWallpaperFromUrl(String imagePageURL) {
-        Glide.with(context)
-                .load(imagePageURL)
-                .asBitmap()
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        try {
-                            WallpaperManager.getInstance(context).setBitmap(resource);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-    }
-
-*/
 }
