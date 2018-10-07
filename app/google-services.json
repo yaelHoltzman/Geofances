@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "949674110620",
+    "firebase_url": "https://geofances-f9a17.firebaseio.com",
+    "project_id": "geofances-f9a17",
+    "storage_bucket": "geofances-f9a17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949674110620:android:562d33e08f9f5a9a",
+        "android_client_info": {
+          "package_name": "com.eatwell.yael.geofances"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "949674110620-ulcrsh14euamu1qmt6u8shl7h9f2p4ot.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eatwell.yael.geofances",
+            "certificate_hash": "9015726f0e510a6e97084dec8c80d347041ac327"
+          }
+        },
+        {
+          "client_id": "949674110620-5kaolnelnetpjsnhgt5uglfh4d4umngg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCukDIzQkAmlVBp9CSG-rEa6Z7oKrw6fX4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "949674110620-5kaolnelnetpjsnhgt5uglfh4d4umngg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

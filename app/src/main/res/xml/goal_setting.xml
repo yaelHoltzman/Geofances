@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:title="Drinking water"
+        android:key="switch_water"
+        android:summary="switch on if you would like to see water ads"
+        android:defaultValue="true" />
+
+    <SwitchPreference
+        android:title="Eat Mindfully"
+        android:key="switch_mindful"
+        android:summary="switch on if you would like to see mindful eating ads"
+        android:defaultValue="true" />
+
+    <SwitchPreference
+        android:title="Get Fit"
+        android:key="switch_fit"
+        android:summary="switch on if you would like to see fitness ads"
+        android:defaultValue="true" />
+
+    <SwitchPreference
+        android:title="Loose Weight"
+        android:key="switch_weightLoss"
+        android:summary="switch on if you would like to see weightloss ads"
+        android:defaultValue="true" />
+
+
+</PreferenceScreen>
