@@ -1,7 +1,7 @@
 package com.eatwell.yael.geofances.Notifications;
 
 import com.eatwell.yael.geofances.Goals.Goal;
-import com.eatwell.yael.geofances.UserP.User;
+import com.eatwell.yael.geofances.UserPreferences.User;
 
 public class NotificationChooser implements NotificationChooserI {
 

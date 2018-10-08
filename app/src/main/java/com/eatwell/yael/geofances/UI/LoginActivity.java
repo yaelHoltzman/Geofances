@@ -75,6 +75,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
+        auth = FirebaseAuth.getInstance();
+
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -99,8 +101,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
         mSignup = findViewById(R.id.login_signUp);
         mResetPassword = findViewById(R.id.login_resetPw);
-
-        auth = FirebaseAuth.getInstance();
 
          mSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,7 +167,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
+        if (auth != null) {
             return;
         }
 

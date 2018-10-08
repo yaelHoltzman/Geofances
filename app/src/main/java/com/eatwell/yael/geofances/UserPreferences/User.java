@@ -1,4 +1,4 @@
-package com.eatwell.yael.geofances.UserP;
+package com.eatwell.yael.geofances.UserPreferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;

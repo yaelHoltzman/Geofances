@@ -1,5 +1,6 @@
 package com.eatwell.yael.geofances.Firebase_Utils;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+
 import java.util.List;
 
 public class GeofenceManager extends AppCompatActivity {
@@ -31,12 +33,13 @@ public class GeofenceManager extends AppCompatActivity {
     private static final long GEO_DURATION = 60 * 60 * 1000;
     private static final String GEOFENCE_REQ_ID = "My Geofence";
     private static final float GEOFENCE_RADIUS = 100.0f; // in meters
-    private PendingIntent geoFencePendingIntent;
+    private PendingIntent geofencePendingIntent;
     private final int GEOFENCE_REQ_CODE = 0;
     private GoogleApiClient googleApiClient;
     private int numberOfGeofences;
     private final String KEY_GEOFENCE_LAT = "GEOFENCE LATITUDE";
     private final String KEY_GEOFENCE_LON = "GEOFENCE LONGITUDE";
+    //private final Context mContext;
 
 
     @Override
@@ -61,12 +64,14 @@ public class GeofenceManager extends AppCompatActivity {
 
     private PendingIntent createGeofencePendingIntent() {
         Log.d(TAG, "createGeofencePendingIntent");
-        if ( geoFencePendingIntent != null )
-            return geoFencePendingIntent;
+        if ( geofencePendingIntent!= null )
+            return geofencePendingIntent;
 
-        Intent intent = new Intent(this, GeofenceTrasitionService.class);
-        return PendingIntent.getService(
-                this, GEOFENCE_REQ_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT );
+        Intent intent = new Intent(getApplicationContext(), GeofenceTrasitionService.class);
+
+        geofencePendingIntent= PendingIntent.getService(this, GEOFENCE_REQ_CODE, intent, PendingIntent.
+                FLAG_UPDATE_CURRENT);
+        return geofencePendingIntent;
     }
 
     // Create a Geofence

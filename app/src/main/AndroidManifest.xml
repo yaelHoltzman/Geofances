@@ -36,7 +36,14 @@
         <service android:name=".Firebase_Utils.GeofenceTrasitionService" />
         <service android:name=".Notifications.NotificationSender" />
 
-        <activity android:name=".UI.Goal_Setting" />
+        <activity android:name=".UI.Goal_Setting">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+
+        </activity>
 
         <service
             android:name=".Firebase_Utils.MyFirebaseInstanceIdService"
@@ -64,11 +71,7 @@
         <activity
             android:name=".UI.LoginActivity"
             android:label="title_activity_login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".UI.SignUp" />
         <activity android:name=".UI.ResetPassword" />
