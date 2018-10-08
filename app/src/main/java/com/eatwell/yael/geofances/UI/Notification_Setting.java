@@ -15,31 +15,19 @@ import android.widget.LinearLayout;
 import com.eatwell.yael.geofances.R;
 import com.eatwell.yael.geofances.Utils.LocationSelector;
 
-public class Goal_Setting extends AppCompatActivity {
+public class Notification_Setting extends AppCompatActivity {
 
-    public static class GoalSettings extends PreferenceFragment {
+    public static class NotificationSettings extends PreferenceFragment {
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.goal_setting);
-
+            addPreferencesFromResource(R.xml.notifications_setting);
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             LinearLayout v = (LinearLayout) super.onCreateView(inflater, container, savedInstanceState);
-
-            Button btn = new Button(getActivity().getApplicationContext());
-            btn.setText("Next");
-
-            v.addView(btn);
-            btn.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Intent intent = new Intent(Goal_Setting.GetGSContext(), LocationSelector.class);
-                    startActivity(intent);
-                }
-            });
 
             return v;
         }
@@ -54,17 +42,13 @@ public class Goal_Setting extends AppCompatActivity {
         //setContentView(R.layout.activity_goal__setting);
         context = this.getApplicationContext();
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new GoalSettings())
+                .replace(android.R.id.content, new NotificationSettings())
                 .commit();
-        PreferenceManager.setDefaultValues(this, R.xml.goal_setting, false);
-        context = getApplicationContext();
+        PreferenceManager.setDefaultValues(this, R.xml.notifications_setting, false);
     }
 
 
     public static Context GetGSContext() {
         return context;
     }
-
 }
-
-

@@ -1,12 +1,12 @@
-package com.eatwell.yael.geofances.User;
+package com.eatwell.yael.geofances.UserP;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.eatwell.yael.geofances.Goal.Goal;
-import com.eatwell.yael.geofances.Goal.GoalFactory;
+import com.eatwell.yael.geofances.Goals.Goal;
+import com.eatwell.yael.geofances.Goals.GoalFactory;
 import com.eatwell.yael.geofances.UI.Goal_Setting;
 import com.google.android.gms.maps.model.LatLng;
 

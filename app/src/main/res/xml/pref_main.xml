@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/Goal_prefs">
+        <SwitchPreference
+            android:title="Eat Mindfully"
+            android:key="switch_mindful"
+            android:summary="switch on if you would like to see mindful eating ads"
+            android:defaultValue="true" />
+
+        <SwitchPreference
+            android:title="Loose Weight"
+            android:key="switch_weightLoss"
+            android:summary="switch on if you would like to see weightloss ads"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+
+
+    <PreferenceCategory android:title="@string/Notification_prefs">
+        <SwitchPreference
+            android:title="Receive notifications"
+            android:key="switch_receiveNotification"
+            android:defaultValue="true" />
+
+        <ListPreference
+            android:defaultValue="08:00"
+            android:dialogTitle="Notification start time"
+            android:entries="@array/opts_values"
+            android:entryValues="@array/notification_startTime_entries"
+            android:key="notification_startTime"
+            android:summary="What time would you like to start receiving notifications?"
+            android:title="Start time" />
+
+        <ListPreference
+            android:defaultValue="22:00"
+            android:dialogTitle="Notification end time"
+            android:entries="@array/opts_values"
+            android:entryValues="@array/notification_endTime_entries"
+            android:key="notification_endTime"
+            android:summary="Until what time would you like to receive notifications?"
+            android:title="End time" />
+
+        <SwitchPreference
+            android:title="Sounds"
+            android:key="@string/switch_notificationSounds"
+            android:defaultValue="true" />
+
+        <SwitchPreference
+            android:title="Vibration"
+            android:key="switch_notificationVibration"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/Wallpaper_prefs">
+        <SwitchPreference
+            android:title="Change Home Wallpaper"
+            android:key="switch_changeHomeWallpaper"
+            android:defaultValue="true" />
+
+        <SwitchPreference
+            android:title="Change Lock Wallpaper"
+            android:key="switch_changeLockWallpaper"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

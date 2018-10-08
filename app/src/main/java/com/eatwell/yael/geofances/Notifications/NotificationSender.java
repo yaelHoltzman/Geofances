@@ -1,4 +1,4 @@
-package com.eatwell.yael.geofances.Notification;
+package com.eatwell.yael.geofances.Notifications;
 
 import android.app.IntentService;
 import android.app.Notification;

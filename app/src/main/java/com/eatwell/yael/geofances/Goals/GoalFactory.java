@@ -1,11 +1,9 @@
-package com.eatwell.yael.geofances.Goal;
+package com.eatwell.yael.geofances.Goals;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.eatwell.yael.geofances.Goal.Goal;
-import com.eatwell.yael.geofances.Goal.Goal_WeightLoss;
 import com.eatwell.yael.geofances.UI.Goal_Setting;
 
 import java.util.ArrayList;
@@ -20,7 +18,7 @@ public class GoalFactory {
 
     private SharedPreferences sharedPref;
 
-    GoalFactory() {
+    public GoalFactory() {
 
         goalCreators.put("switch_mindful", meGoal);
         goalCreators.put("switch_weightLoss", wlGoal);

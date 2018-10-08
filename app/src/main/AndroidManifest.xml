@@ -34,7 +34,7 @@
             android:value="@integer/google_play_services_version" />
 
         <service android:name=".Firebase_Utils.GeofenceTrasitionService" />
-        <service android:name=".Notification.NotificationSender" />
+        <service android:name=".Notifications.NotificationSender" />
 
         <activity android:name=".UI.Goal_Setting" />
 
@@ -60,21 +60,28 @@
         <activity android:name=".Firebase_Utils.GeofenceManager" />
         <activity android:name=".Utils.Permission_Checker" />
         <activity android:name=".Utils.LocationSelector" />
-        <activity android:name=".UI.StartActivity"/>
-
+        <activity android:name=".UI.StartActivity" />
         <activity
             android:name=".UI.LoginActivity"
             android:label="title_activity_login">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".UI.SignUp" />
         <activity android:name=".UI.ResetPassword" />
-        <activity android:name=".UI.Notification"></activity>
+        <activity android:name=".UI.Notification" />
+        <activity android:name=".UI.Notification_Setting">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".UI.CompactPreferences" />
+        <activity android:name=".UI.SettingPrefs"></activity>
     </application>
 
 </manifest>

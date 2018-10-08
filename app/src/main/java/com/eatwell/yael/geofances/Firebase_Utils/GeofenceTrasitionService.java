@@ -1,11 +1,16 @@
 package com.eatwell.yael.geofances.Firebase_Utils;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.eatwell.yael.geofances.Notification.NotificationChooser;
-import com.eatwell.yael.geofances.Notification.NotificationChooserI;
+import com.eatwell.yael.geofances.Notifications.NotificationChooser;
+import com.eatwell.yael.geofances.Notifications.NotificationChooserI;
+import com.eatwell.yael.geofances.Wallpaper.WallPaperChooser;
+import com.eatwell.yael.geofances.Wallpaper.WallPaperChooserI;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofenceStatusCodes;
 import com.google.android.gms.location.GeofencingEvent;
@@ -39,10 +44,27 @@ public class GeofenceTrasitionService extends IntentService {
             // Get the geofence that were triggered
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
 
-            // Send notification
-            NotificationChooserI notificationChooserI = new NotificationChooser();
-            notificationChooserI.SendNextNotification(getGeofenceTrasition(geoFenceTransition),
-                    getTriggeringGeofences(geoFenceTransition, triggeringGeofences));
+
+            //check if user requests to receive notifications
+            Context context = getApplicationContext();
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+
+            boolean isNotificationsOn = sharedPref.getBoolean("switch_recieveNotifications", false);
+            //TODO: add this switch in general preferences
+            boolean isWallPaperOn = sharedPref.getBoolean("switch_changeWallpaper", true);
+
+            if (isNotificationsOn) {
+                // Send notification
+                NotificationChooserI notificationChooserI = new NotificationChooser();
+                notificationChooserI.SendNextNotification(getGeofenceTrasition(geoFenceTransition),
+                        getTriggeringGeofences(geoFenceTransition, triggeringGeofences));
+            }
+
+            if (isWallPaperOn) {
+                WallPaperChooserI wallPaperChooserI = new WallPaperChooser();
+                wallPaperChooserI.ChangeWallPaper(getGeofenceTrasition(geoFenceTransition),
+                        getTriggeringGeofences(geoFenceTransition, triggeringGeofences));
+            }
         }
     }
 

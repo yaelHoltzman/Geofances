@@ -1,4 +1,4 @@
-package com.eatwell.yael.geofances.Goal;
+package com.eatwell.yael.geofances.Goals;
 
 public interface Goal {
 

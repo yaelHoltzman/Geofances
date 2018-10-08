@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:title="Change Home Wallpaper"
+        android:key="switch_changeHomeWallpaper"
+        android:defaultValue="true" />
+
+    <SwitchPreference
+        android:title="Change Lock Wallpaper"
+        android:key="switch_changeLockWallpaper"
+        android:defaultValue="true" />
+
+</PreferenceScreen>

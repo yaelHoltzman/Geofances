@@ -39,8 +39,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 public class LocationSelector extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
         LocationListener,
         OnMapReadyCallback,
         GoogleMap.OnMapClickListener,
@@ -53,7 +51,6 @@ public class LocationSelector extends AppCompatActivity implements
     private Button setLocationButton;
 
     private GoogleMap map;
-    //private GoogleApiClient googleApiClient;
     private Location lastLocation;
     private Marker locationMarker;
     private GeofenceManager geofenceManager;
@@ -95,8 +92,8 @@ public class LocationSelector extends AppCompatActivity implements
                 }
                 for (Location location : locationResult.getLocations()) {
                     // Update UI with location data
-                    //getLastKnownLocation();
-                    writeActualLocation(location);
+                    getLastKnownLocation();
+                    //writeActualLocation(location);
                 }
             }
         };
@@ -168,26 +165,6 @@ public class LocationSelector extends AppCompatActivity implements
         Log.d(TAG, "onLocationChanged ["+location+"]");
         lastLocation = location;
         writeActualLocation(location);
-    }
-
-    // GoogleApiClient.ConnectionCallbacks connected
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        Log.i(TAG, "onConnected()");
-        getLastKnownLocation();
-        recoverGeofenceMarker();
-    }
-
-    // GoogleApiClient.ConnectionCallbacks suspended
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.w(TAG, "onConnectionSuspended()");
-    }
-
-    // GoogleApiClient.OnConnectionFailedListener fail
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.w(TAG, "onConnectionFailed()");
     }
 
     // Get last known location
