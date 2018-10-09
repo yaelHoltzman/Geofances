@@ -9,50 +9,31 @@ import com.eatwell.yael.geofances.UI.Goal_Setting;
 import java.util.ArrayList;
 import java.util.Map;
 
+
 public class GoalFactory {
 
-    private Map<String, Goal> goalCreators;
-
-    private Goal_MindfulEating meGoal;
-    private Goal_WeightLoss wlGoal;
-
-    private SharedPreferences sharedPref;
+    private static ArrayList<String> preferences;
 
     public GoalFactory() {
 
-        goalCreators.put("switch_mindful", meGoal);
-        goalCreators.put("switch_weightLoss", wlGoal);
+        preferences = new ArrayList<>();
 
-        //TODO add water drink and fitness goals as well
-
+        preferences.add("Mindful");
+        preferences.add("Weightloss");
     }
 
-    public int GetGoals(ArrayList<Goal> goalArrayList) {
-
-        int numberOfGoals = 0;
-
-        Context goalSettingContext = Goal_Setting.GetGSContext();
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(goalSettingContext);
-
-        for (Map.Entry<String, Goal> entry : goalCreators.entrySet()) {
-            boolean isGoal = LoadPref(entry.getKey(), false, goalArrayList);
-            if (isGoal) {
-                ++numberOfGoals;
+    public static Goal getGoal (String goalKey) {
+            if (goalKey == "Mindful") {
+                return new Goal_MindfulEating();
             }
+            else if (goalKey == "Weightloss") {
+                return new Goal_WeightLoss();
+            }
+            return null;
         }
 
-        return numberOfGoals;
+    public static ArrayList<String> getAllGoalPreferences() {
+        return preferences;
     }
-
-    private boolean LoadPref(String key, boolean defVal, ArrayList<Goal> goalArrayList) {
-
-        boolean pref = sharedPref.getBoolean(key, defVal);
-        if (pref) {
-            goalArrayList.add(new Goal_MindfulEating());
-            return true;
-        }
-        return false;
-    }
-
 
 }

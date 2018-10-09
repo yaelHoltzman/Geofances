@@ -22,6 +22,8 @@ public class User implements UserI {
     private ArrayList<Goal> goalArrayList;
     private int currentGoalIndex;
     private int numberOfGoals;
+    private SharedPreferences sharedPref;
+    private GoalFactory goalFactory;
 
     //Location Indicators
     private HashMap<String, LatLng> userLocations;
@@ -60,16 +62,33 @@ public class User implements UserI {
         goalArrayList = new ArrayList<>();
         userLocations = new HashMap<>();
         isNotificationsOn = false;
-        GoalFactory goalFactory = new GoalFactory();
+        goalFactory = new GoalFactory();
 
         //go over the goals and add them to the list
         //TODO - is this the right context?
         Context goalSettingContext = Goal_Setting.GetGSContext();
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(goalSettingContext);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(goalSettingContext);
 
         isNotificationsOn = sharedPref.getBoolean("switch_recieveNotifications", false);
 
-        numberOfGoals = goalFactory.GetGoals(goalArrayList);
+
         //TODO make sure number of goals is not 0?
     }
+
+    public void LoadGoals (ArrayList<Goal> goalArrayList) {
+
+        ArrayList<String> allGoalPreferences = goalFactory.getAllGoalPreferences();
+        for (String entry : allGoalPreferences) {
+
+            boolean pref = sharedPref.getBoolean(entry, true);
+            if (pref) {
+                //create a new goal
+                goalArrayList.add(goalFactory.getGoal(entry));
+                ++numberOfGoals;
+            }
+        }
+
+
+    }
+
 }
