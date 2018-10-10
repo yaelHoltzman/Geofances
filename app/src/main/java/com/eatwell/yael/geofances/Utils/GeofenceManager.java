@@ -1,6 +1,5 @@
-package com.eatwell.yael.geofances.Firebase_Utils;
+package com.eatwell.yael.geofances.Utils;
 
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.eatwell.yael.geofances.Utils.Permission_Checker;
+import com.eatwell.yael.geofances.UserPreferences.User;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -36,16 +35,21 @@ public class GeofenceManager extends AppCompatActivity {
     private PendingIntent geofencePendingIntent;
     private final int GEOFENCE_REQ_CODE = 0;
     private GoogleApiClient googleApiClient;
-    private int numberOfGeofences;
+    private static int numberOfGeofences;
     private final String KEY_GEOFENCE_LAT = "GEOFENCE LATITUDE";
     private final String KEY_GEOFENCE_LON = "GEOFENCE LONGITUDE";
     //private final Context mContext;
+    private User user;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mGeofencingClient = LocationServices.getGeofencingClient(this);
+
+        user = User.getInstance();
+
+        Log.d(TAG, "init mGeofencingClient");
+        mGeofencingClient = LocationServices.getGeofencingClient(user.getmContext());
     }
 
     // Create a Geofence Request
@@ -67,9 +71,11 @@ public class GeofenceManager extends AppCompatActivity {
         if ( geofencePendingIntent!= null )
             return geofencePendingIntent;
 
-        Intent intent = new Intent(getApplicationContext(), GeofenceTrasitionService.class);
+        User user = User.getInstance();
 
-        geofencePendingIntent= PendingIntent.getService(this, GEOFENCE_REQ_CODE, intent, PendingIntent.
+        Intent intent = new Intent(user.getmContext(), GeofenceTrasitionService.class);
+
+        geofencePendingIntent= PendingIntent.getService(user.getmContext(), GEOFENCE_REQ_CODE, intent, PendingIntent.
                 FLAG_UPDATE_CURRENT);
         return geofencePendingIntent;
     }
@@ -99,9 +105,19 @@ public class GeofenceManager extends AppCompatActivity {
     // Add the created GeofenceRequest to the device's monitoring list
     private void addGeofence(GeofencingRequest request, Context context) {
         Log.d(TAG, "addGeofence");
+
+        if (mGeofencingClient == null) {
+            if (user == null) {
+                user = User.getInstance();
+            }
+            mGeofencingClient = LocationServices.getGeofencingClient(user.getmContext());
+        }
+
+
         Permission_Checker checker = new Permission_Checker();
         if (checker.checkPermission(context))
-            mGeofencingClient.addGeofences(request, createGeofencePendingIntent())
+            mGeofencingClient.
+                    addGeofences(request, createGeofencePendingIntent())
                     .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -113,7 +129,7 @@ public class GeofenceManager extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             // Failed to add geofences
-                            Log.e(TAG, "addGeofence error");
+                            Log.e(TAG, "addGeofence error " + e.getMessage());
                         }
                     });
     }
@@ -145,6 +161,7 @@ public class GeofenceManager extends AppCompatActivity {
             Geofence geofence = createGeofence( geoFenceMarker.getPosition(), GEOFENCE_RADIUS );
             GeofencingRequest geofenceRequest = createGeofenceRequest( geofence );
             addGeofence( geofenceRequest, context );
+            saveGeofence(geoFenceMarker);
         } else {
             Log.e(TAG, "Geofence marker is null");
         }

@@ -4,6 +4,7 @@ import android.util.Pair;
 
 import java.util.HashMap;
 
+
 public class Goal_MindfulEating implements Goal {
 
     private HashMap<Pair<String, String>, String> notifications;
@@ -22,6 +23,8 @@ public class Goal_MindfulEating implements Goal {
         notifications.put(keyPair3, "Snacks are empty calories, when hungry- eat a balanced meal");
         Pair<String, String> keyPair4 = new Pair<>("Work", "GEOFENCE_TRANSITION_EXIT");
         notifications.put(keyPair4, "go excersice if you have time");
+
+        //TODO read from config file or storage??
 
         Pair<String, String> keyPair5 = new Pair<>("Home", "GEOFENCE_TRANSITION_ENTER");
         wallPPUrls.put(keyPair5, "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/Mindful1.jpg?alt=media&token=e5ea2288-df11-4c16-bbb2-34404acea7f6");

@@ -40,16 +40,16 @@ public class SettingPrefs extends CompactPreferences {
             addPreferencesFromResource(R.xml.pref_main);
 
             // goals EditText change listener
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.Goal_prefs)));
+            //bindPreferenceSummaryToValue(findPreference("switch_receiveNotification"));
 
             // notification preference change listener
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.Notification_prefs)));
+            //bindPreferenceSummaryToValue(findPreference(getString(R.string.switch_notificationSounds)));
 
             // wallpaper EditText change listener
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.Wallpaper_prefs)));
-
+           // bindPreferenceSummaryToValue(findPreference("switch_changeHomeWallpaper"));
         }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

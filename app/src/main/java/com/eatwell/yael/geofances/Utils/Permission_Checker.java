@@ -10,14 +10,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-public class Permission_Checker extends AppCompatActivity  {
-
+public class Permission_Checker extends AppCompatActivity {
     private static final String TAG = Permission_Checker.class.getSimpleName();
 
-    private final int REQ_PERMISSION = 999;
+    private static final int REQ_PERMISSION = 999;
 
     // Check for permission to access Location
-    public boolean checkPermission(Context context) {
+    public static boolean checkPermission(Context context) {
         Log.d(TAG, "checkPermission()");
         // Ask for permission if it wasn't granted yet
         return (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -25,7 +24,7 @@ public class Permission_Checker extends AppCompatActivity  {
     }
 
     // Asks for permission
-    public void askPermission(Activity activity) {
+    public static void askPermission(Activity activity) {
         Log.d(TAG, "askPermission()");
         ActivityCompat.requestPermissions(activity,
                 new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
@@ -33,8 +32,9 @@ public class Permission_Checker extends AppCompatActivity  {
         );
     }
 
+    //TODO- implement this in the calling activity?
     // Verify user's response of the permission requested
-    @Override
+    /*@Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Log.d(TAG, "onRequestPermissionsResult()");
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -52,10 +52,10 @@ public class Permission_Checker extends AppCompatActivity  {
                 break;
             }
         }
-    }
+    }*/
 
     // App cannot work without the permissions
-    private void permissionsDenied() {
+    private static void permissionsDenied() {
         Log.w(TAG, "permissionsDenied()");
         // TODO close app and warn user
     }

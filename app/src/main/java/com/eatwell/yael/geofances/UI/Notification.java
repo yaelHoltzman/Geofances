@@ -6,8 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.eatwell.yael.geofances.R;
+import com.eatwell.yael.geofances.Utils.LocationSelector;
 
-public class Notification extends AppCompatActivity {
+public class Notification extends LocationSelector {
 
     private static final String NOTIFICATION_MSG = "";
 

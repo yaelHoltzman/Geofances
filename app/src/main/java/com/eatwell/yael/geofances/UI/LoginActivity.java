@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.eatwell.yael.geofances.R;
+import com.eatwell.yael.geofances.UserPreferences.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -71,11 +72,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
+
+        auth = FirebaseAuth.getInstance();
+
+        User user = User.getInstance();
+        user.setmContext(getApplicationContext());
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
-
-        auth = FirebaseAuth.getInstance();
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -115,6 +120,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 startActivity(new Intent(LoginActivity.this, ResetPassword.class));
             }
         });
+
+
     }
 
     private void populateAutoComplete() {
@@ -167,7 +174,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (auth != null) {
+        if (mAuthTask != null) {
             return;
         }
 

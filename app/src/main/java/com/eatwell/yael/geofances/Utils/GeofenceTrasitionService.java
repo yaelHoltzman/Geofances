@@ -1,4 +1,4 @@
-package com.eatwell.yael.geofances.Firebase_Utils;
+package com.eatwell.yael.geofances.Utils;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -55,14 +55,12 @@ public class GeofenceTrasitionService extends IntentService {
 
             if (isNotificationsOn) {
                 // Send notification
-                NotificationChooserI notificationChooserI = new NotificationChooser();
-                notificationChooserI.SendNextNotification(getGeofenceTrasition(geoFenceTransition),
+                NotificationChooser.SendNextNotification(getGeofenceTrasition(geoFenceTransition),
                         getTriggeringGeofences(geoFenceTransition, triggeringGeofences));
             }
 
             if (isWallPaperOn) {
-                WallPaperChooserI wallPaperChooserI = new WallPaperChooser();
-                wallPaperChooserI.ChangeWallPaper(getGeofenceTrasition(geoFenceTransition),
+                WallPaperChooser.ChangeWallPaper(getGeofenceTrasition(geoFenceTransition),
                         getTriggeringGeofences(geoFenceTransition, triggeringGeofences));
             }
         }

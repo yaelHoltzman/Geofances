@@ -1,14 +1,13 @@
 package com.eatwell.yael.geofances.Firebase_Utils;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdService;
 
 import android.util.Log;
 
 
-public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
+public class FirebaseInstanceIdService extends com.google.firebase.iid.FirebaseInstanceIdService {
 
-    private static final String TAG = MyFirebaseInstanceIdService.class.getSimpleName();
+    private static final String TAG = FirebaseInstanceIdService.class.getSimpleName();
 
     @Override
     public void onTokenRefresh() {

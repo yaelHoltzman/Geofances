@@ -8,7 +8,7 @@
 
     <SwitchPreference
         android:title="Eat Mindfully"
-        android:key="switch_mindful"
+        android:key="Mindful"
         android:summary="switch on if you would like to see mindful eating ads"
         android:defaultValue="true" />
 
@@ -20,7 +20,7 @@
 
     <SwitchPreference
         android:title="Loose Weight"
-        android:key="switch_weightLoss"
+        android:key="Weightloss"
         android:summary="switch on if you would like to see weightloss ads"
         android:defaultValue="true" />
 

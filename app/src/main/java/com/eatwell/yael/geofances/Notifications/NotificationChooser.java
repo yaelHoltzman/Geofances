@@ -1,24 +1,26 @@
 package com.eatwell.yael.geofances.Notifications;
 
+import android.support.v4.app.Fragment;
+
 import com.eatwell.yael.geofances.Goals.Goal;
 import com.eatwell.yael.geofances.UserPreferences.User;
 
-public class NotificationChooser implements NotificationChooserI {
+public class NotificationChooser extends Fragment {
 
-    private User user;
-    private NotificationSender ns;
+    static private User user;
 
-    public NotificationChooser() {
-        user = new User();
-        ns = new NotificationSender();
-    }
 
-    public void SendNextNotification(String location, String geofenceTransition) {
+    public static void SendNextNotification(String location, String geofenceTransition) {
+        //TODO create instance of user
+        if (user == null) {
+            user = User.getInstance();
+        }
+
         //get the appropriate notification according to user's goals
         Goal userGoal = user.GetGoal();
         String notification  = userGoal.GetNextNotification(location, geofenceTransition);
 
         //send notification to user
-        ns.sendNotification(notification);
+        NotificationSender.sendNotification(notification);
     }
 }

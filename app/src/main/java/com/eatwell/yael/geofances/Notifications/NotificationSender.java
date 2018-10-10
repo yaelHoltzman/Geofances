@@ -12,11 +12,13 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.eatwell.yael.geofances.R;
+import com.eatwell.yael.geofances.UserPreferences.User;
 
 
 public class NotificationSender extends IntentService {
 
     private static final String TAG = NotificationSender.class.getSimpleName();
+    private static Context context;// = user.getContext(); TODO initialize context here
 
     public static final int NOTIFICATION_ID = 0;
 
@@ -24,15 +26,15 @@ public class NotificationSender extends IntentService {
         super(TAG);
     }
 
-    public void sendNotification( String msg ) {
+    public static void sendNotification( String msg ) {
         Log.i(TAG, "sendNotification: " + msg );
 
         // Intent to start the main Activity
         Intent notificationIntent = com.eatwell.yael.geofances.UI.Notification.makeNotificationIntent(
-                getApplicationContext(), msg
+                context, msg
         );
 
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(com.eatwell.yael.geofances.UI.Notification.class);
         stackBuilder.addNextIntent(notificationIntent);
         PendingIntent notificationPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -40,7 +42,7 @@ public class NotificationSender extends IntentService {
 
         // Creating and sending Notification
         NotificationManager notificatioMng =
-                (NotificationManager) getSystemService( Context.NOTIFICATION_SERVICE );
+                (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
         notificatioMng.notify(
                 NOTIFICATION_ID,
                 createNotification(msg, notificationPendingIntent));
@@ -48,8 +50,9 @@ public class NotificationSender extends IntentService {
     }
 
     // Create notification
-    private Notification createNotification(String msg, PendingIntent notificationPendingIntent) {
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+    private static Notification createNotification(String msg, PendingIntent notificationPendingIntent) {
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
+        //TODO deprecated API fix
         notificationBuilder
                 .setSmallIcon(R.drawable.ic_action_location)
                 .setColor(Color.RED)

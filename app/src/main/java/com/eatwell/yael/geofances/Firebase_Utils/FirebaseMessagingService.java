@@ -13,12 +13,11 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.eatwell.yael.geofances.R;
-import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
+public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
-    private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
+    private static final String TAG = FirebaseMessagingService.class.getSimpleName();
     private NotificationManager notifManager;
     private NotificationChannel mChannel;
 

@@ -5,15 +5,18 @@ import android.support.v4.app.Fragment;
 import com.eatwell.yael.geofances.Goals.Goal;
 import com.eatwell.yael.geofances.UserPreferences.User;
 
-public class WallPaperChooser extends Fragment implements WallPaperChooserI {
+public class WallPaperChooser extends Fragment /*implements WallPaperChooserI*/ {
 
-    private User user = new User();
-    private WallPaperChanger wpC = new WallPaperChanger(getContext());
+    private static User user;
 
-    @Override
-    public void ChangeWallPaper(String location, String geofenceTransition) {
+    public static void ChangeWallPaper(String location, String geofenceTransition) {
+
+        if (user == null) {
+            user = User.getInstance();
+        }
+
         Goal userGoal = user.GetGoal();
         String wppUrl = userGoal.GetWallPaperUrl(location, geofenceTransition);
-        wpC.ChangeWallPaper(wppUrl);
+        WallPaperChanger.ChangeWallPaper(wppUrl);
     }
 }

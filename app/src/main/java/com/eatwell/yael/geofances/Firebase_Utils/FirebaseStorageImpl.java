@@ -6,27 +6,38 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.VideoView;
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+
+
+import com.bumptech.glide.request.transition.Transition;
 import com.eatwell.yael.geofances.R;
+import com.eatwell.yael.geofances.UserPreferences.User;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
+
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class MyStorageActivity extends AppCompatActivity {
+public class FirebaseStorageImpl extends AppCompatActivity {
 
-    private StorageReference mStorageRef;
-    private Bitmap bmp;
+    private static StorageReference mStorageRef;
+    private static Bitmap[] bmp;
 
 
     @Override
@@ -35,38 +46,87 @@ public class MyStorageActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_storage);
 
         // [START storage_field_initialization]
-        FirebaseStorage storage = FirebaseStorage.getInstance();
+        com.google.firebase.storage.FirebaseStorage storage = com.google.firebase.storage.FirebaseStorage.getInstance();
         // [END storage_field_initialization]
+
+        bmp = new Bitmap[1];
     }
 
 
-    public Bitmap getImageBitmap (String url) {
+    public static Bitmap getImageBitmap(String url) {
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
+        com.google.firebase.storage.FirebaseStorage storage = com.google.firebase.storage.FirebaseStorage.getInstance();
         StorageReference gsReference = storage.getReferenceFromUrl(url);
 
-        final long ONE_MEGABYTE = 1024 * 1024;
+        User user = User.getInstance();
+        if (bmp == null) {
+            bmp = new Bitmap[1];
+        }
+
+
+          final long ONE_MEGABYTE = 1024 * 1024;
 
         gsReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inMutable = true;
-                bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+                bmp[0] = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
+                int errorCode = ((StorageException) exception).getErrorCode();
+                String errorMessage = exception.getMessage();
+                Log.d("TAG", errorMessage + errorCode);
             }
         });
-        return bmp;
+        return bmp[0];
     }
+}
 
-    /*
+
+/*
+
+
+
+
+    Glide.with(user.getmContext())
+                //.using(new FirebaseImageLoader())
+                .asBitmap()
+                .load(gsReference)
+                .into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                bmp[0] = resource;
+            }
+        });*/
+//}
+
+
+
+
+
+
+        /*
+        Glide.with(user.getmContext())
+                .asBitmap()
+                .load(url)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        bmp[0] = resource;
+                    }
+                });
+        return bmp[0];
+    }
+}
+*/
+
+/*
     public void DownLoad(String fileName) {
 
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+        mStorageRef = FirebaseStorageImpl.getInstance().getReference();
 
         // Create a child reference
         // imagesRef now points to "images"
@@ -112,7 +172,7 @@ public class MyStorageActivity extends AppCompatActivity {
         if (stringRef == null) {
             return;
         }
-        mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl(stringRef);
+        mStorageRef = FirebaseStorageImpl.getInstance().getReferenceFromUrl(stringRef);
 
         // Find all DownloadTasks under this StorageReference (in this example, there should be one)
         List<FileDownloadTask> tasks = mStorageRef.getActiveDownloadTasks();
@@ -130,5 +190,5 @@ public class MyStorageActivity extends AppCompatActivity {
             });
         }
     }
-    */
-}
+
+}*/

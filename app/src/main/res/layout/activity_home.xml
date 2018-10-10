@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.Home">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="75dp"
+            android:layout_height="71dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:onClick="onClick"
+            app:srcCompat="@drawable/setting_button"
+            tools:layout_editor_absoluteX="27dp"
+            tools:layout_editor_absoluteY="27dp" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="227dp"
+            android:layout_height="214dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="128dp"
+            android:contentDescription="TODO"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/yael_element" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

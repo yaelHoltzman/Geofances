@@ -23,6 +23,7 @@ public class Goal_WeightLoss implements Goal {
         Pair<String, String> keyPair4 = new Pair<>("Work", "GEOFENCE_TRANSITION_EXIT");
         notifications.put(keyPair4, "test4");
 
+        //TODO read from config file or from storage??
 
         Pair<String, String> keyPair5 = new Pair<>("Home", "GEOFENCE_TRANSITION_ENTER");
         wallPPUrls.put(keyPair5, "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/weightLoss1.jpg?alt=media&token=40929684-756e-485b-bf4f-421a0ca50b7d");
