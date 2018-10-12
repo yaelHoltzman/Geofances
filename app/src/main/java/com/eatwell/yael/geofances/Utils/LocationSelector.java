@@ -37,26 +37,21 @@ public class LocationSelector extends AppCompatActivity {
 
     private GoogleMap map;
     private SupportMapFragment mapFragment;
-
     private Marker locationMarker;
-
     private Location lastLocation;
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private boolean mRequestingLocationUpdates;
+    private static User user = User.getInstance();
 
     private Permission_Checker permissionChecker;
     private GeofenceManager geofenceManager;
 
-    private FusedLocationProviderClient mFusedLocationClient;
-
-    //TODO
-    // Defined in mili seconds.
+    // TODO currently defined in mili seconds.
     // This number in extremely low, and should be used only for debug
     private final int UPDATE_INTERVAL =  1000 * 60;
     private final int FASTEST_INTERVAL = 900 * 60;
-
-    private boolean mRequestingLocationUpdates;
-    private User user;
 
     // TODO check whether location settings are satisfied
 
@@ -66,8 +61,7 @@ public class LocationSelector extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_selector);
 
-        user = User.getInstance();
-
+        //user = User.getInstance();
         setLocationButton = (Button) findViewById(R.id.setLocationButton);
         permissionChecker = new Permission_Checker();
         geofenceManager = new GeofenceManager();

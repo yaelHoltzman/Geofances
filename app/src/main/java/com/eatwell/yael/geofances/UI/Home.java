@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.eatwell.yael.geofances.R;
+import com.eatwell.yael.geofances.UserPreferences.User;
 
 public class Home extends AppCompatActivity {
 
@@ -16,6 +17,11 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //first activity updates activity context in user singleton
+        User user = User.getInstance();
+        user.setmContext(getApplicationContext());
+
+        //if this is the app's first run, start from "start" activity
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         boolean isFirstRun= prefs.getBoolean(getString(R.string.isFirstRun), false);
 

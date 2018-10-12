@@ -27,11 +27,6 @@
             android:required="false" />
 
         <activity android:name=".UI.TestActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
@@ -42,7 +37,6 @@
             android:value="@integer/google_play_services_version" />
 
         <service android:name=".Utils.GeofenceTrasitionService" />
-        <service android:name=".Notifications.NotificationSender" />
 
         <activity android:name=".UI.Goal_Setting" />
 
@@ -56,7 +50,8 @@
 
         <activity
             android:name=".UI.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings">
+        </activity>
 
         <uses-library android:name="com.google.android.maps" />
 
@@ -76,21 +71,23 @@
         <activity
             android:name=".UI.LoginActivity"
             android:label="title_activity_login">
-        </activity>
 
-
-
-        <activity android:name=".UI.SettingPrefs" />
-        <activity android:name=".UI.SignUp" />
-        <activity android:name=".UI.ResetPassword" />
-        <activity android:name=".UI.Notification" />
-        <activity android:name=".UI.Notification_Setting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+
+        <activity android:name=".Firebase_Utils.FirebaseStorageImpl" />
+        <activity android:name=".UI.SignUp">
+    </activity>
+
+
+        <activity android:name=".UI.ResetPassword" />
+        <activity android:name=".UI.Notification" />
         <activity android:name=".UI.CompactPreferences" />
         <activity android:name=".UI.Home"></activity>
     </application>

@@ -1,7 +1,6 @@
 package com.eatwell.yael.geofances.Firebase_Utils;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-
 import android.util.Log;
 
 

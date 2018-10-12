@@ -17,29 +17,33 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
-public class User extends Activity implements UserI {
+//User Singleton
+public class User extends Activity {
 
     private static final String TAG = User.class.getSimpleName();
     //Goal Indicators
     private ArrayList<Goal> goalArrayList;
-    private static int currentGoalIndex;
-    private static int numberOfGoals;
+    private int currentGoalIndex;
+    private int numberOfGoals;
 
-    //private static User mContext;
     private Context mContext;
-
     private SharedPreferences sharedPref;
     private GoalFactory goalFactory;
-    //private Context mcontext;
-
 
     //Location Indicators
     private HashMap<String, LatLng> userLocations;
 
-    //Notification flag
-    private static boolean isNotificationsOn;
+    //boolean vals settings
+    private static boolean isNotificationsOn = true;
+    private static boolean isSoundOn = true;
+    private static boolean isVibrateOn = true;
 
+    private static boolean isWallPaperHome = true;
+    private static boolean isWallPaperLock = true;
+
+
+
+    //user Instance
     private static User userInstance;
 
     public static User getInstance() {
@@ -59,27 +63,25 @@ public class User extends Activity implements UserI {
        return mContext;
     }
 
-    @Override
     public Goal GetGoal() {
         Log.d(TAG, "GetGoal");
         LoadGoals(goalArrayList);
 
+        Goal goal = goalArrayList.get(currentGoalIndex % numberOfGoals);
         ++currentGoalIndex;
-        return goalArrayList.get(currentGoalIndex % numberOfGoals);
+
+        return goal;
     }
 
-    @Override
     public LatLng GetLocation(String locationName) {
 
         return userLocations.get(locationName);
     }
 
-    @Override
     public void SetLocation(LatLng latLng, String locationName) {
         userLocations.put(locationName, latLng);
     }
 
-    @Override
     public boolean IsGettingNotifications() {
 
         return isNotificationsOn;
@@ -92,8 +94,7 @@ public class User extends Activity implements UserI {
         userLocations = new HashMap<>();
         isNotificationsOn = false;
         goalFactory = new GoalFactory();
-        //mContext = this;
-        //mcontext = context;
+
 
         //TODO - use Loadgoals in Onclick Next of usergoal settings and remove from here?
         //go over the goals and add them to the list
@@ -103,12 +104,14 @@ public class User extends Activity implements UserI {
 
     public void LoadGoals (ArrayList<Goal> goalArrayList) {
 
-        //SettingsActivity sa = new SettingsActivity();
-        //SettingsActivity.GeneralPreferenceFragment gfs = new SettingsActivity.GeneralPreferenceFragment();
         sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-        //isNotificationsOn = sharedPref.getBoolean("switch_recieveNotifications", false);
-
+        isNotificationsOn = sharedPref.getBoolean("switch_recieveNotifications", true);
+        //isSoundOn = sharedPref.getBoolean("@string/switch_notificationSounds", true);
+        isVibrateOn= sharedPref.getBoolean("switch_notificationVibration", true);
+        isWallPaperLock = sharedPref.getBoolean("switch_changeLockWallpaper", true);
+        isWallPaperHome = sharedPref.getBoolean("switch_changeHomeWallpaper", true);
+        //TODO add notification recieving time preference
 
         ArrayList<String> allGoalPreferences = goalFactory.getAllGoalPreferences();
         for (String entry : allGoalPreferences) {
@@ -118,7 +121,7 @@ public class User extends Activity implements UserI {
                 //create a new goal
                 goalArrayList.add(goalFactory.getGoal(entry));
                 ++numberOfGoals;
-                Log.d(TAG, "NUMBER OF GOALS: " + numberOfGoals);
+                Log.d(TAG, "Number of goals: " + numberOfGoals);
             }
         }
     }

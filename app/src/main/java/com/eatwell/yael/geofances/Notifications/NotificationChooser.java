@@ -2,16 +2,17 @@ package com.eatwell.yael.geofances.Notifications;
 
 import android.support.v4.app.Fragment;
 
+import com.eatwell.yael.geofances.Firebase_Utils.FirebaseMessagingService;
 import com.eatwell.yael.geofances.Goals.Goal;
+import com.eatwell.yael.geofances.R;
 import com.eatwell.yael.geofances.UserPreferences.User;
 
 public class NotificationChooser extends Fragment {
 
     static private User user;
 
-
     public static void SendNextNotification(String location, String geofenceTransition) {
-        //TODO create instance of user
+        //create instance of user
         if (user == null) {
             user = User.getInstance();
         }
@@ -21,6 +22,7 @@ public class NotificationChooser extends Fragment {
         String notification  = userGoal.GetNextNotification(location, geofenceTransition);
 
         //send notification to user
-        NotificationSender.sendNotification(notification);
+        FirebaseMessagingService fbms = new FirebaseMessagingService();
+        fbms.SendNotification("New Notification", notification);
     }
 }

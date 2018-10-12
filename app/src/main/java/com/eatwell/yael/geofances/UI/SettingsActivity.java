@@ -21,6 +21,7 @@ import android.view.MenuItem;
 
 import com.eatwell.yael.geofances.R;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -79,6 +80,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     }
                 }
 
+            } else if (value instanceof Boolean) {
+                Boolean boolValue = (Boolean) value;
+                preference.setSummary(boolValue.toString());
             } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
@@ -106,26 +110,34 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      *
      * @see #sBindPreferenceSummaryToValueListener
      */
-    private static void bindPreferenceSummaryToValue(Preference preference) {
+
+    private static void bindPreferenceSummaryToValue(Preference preference, Type type) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 
         // Trigger the listener immediately with the preference's
         // current value.
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), ""));
+
+        if (type == String.class) {
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+                    PreferenceManager
+                            .getDefaultSharedPreferences(preference.getContext())
+                            .getString(preference.getKey(), ""));
+        } else if (type == Boolean.class) {
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(
+                    preference,
+                    PreferenceManager
+                            .getDefaultSharedPreferences(preference.getContext())
+                            .getBoolean(preference.getKey(), true));
+        }
+
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
-    }
-
-    public Context getCContext() {
-        return getBaseContext();
     }
 
     /**
@@ -167,38 +179,19 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
 
-    /**
-     * This fragment shows general preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    /*public static class GeneralPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_general);
-            setHasOptionsMenu(true);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            //bindPreferenceSummaryToValue(findPreference("example_text"));
-            //bindPreferenceSummaryToValue(findPreference("example_list"));
-        }
-*/
-
     public static class GeneralPreferenceFragment extends PreferenceFragment {
-
-        public Context getSPcontext () {
-            return this.getContext();
-        }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.goal_setting);
             setHasOptionsMenu(true);
+
+            // goals preferences change listener
+            bindPreferenceSummaryToValue(findPreference("switch_mindful"), Boolean.class);
+            bindPreferenceSummaryToValue(findPreference("switch_weightLoss"), Boolean.class);
 
         }
 
@@ -229,7 +222,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            //bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+
+            // notifications preferences change listener
+            bindPreferenceSummaryToValue(findPreference("switch_receiveNotification"), Boolean.class);
+
+            bindPreferenceSummaryToValue(findPreference("notification_startTime"), String.class);
+            bindPreferenceSummaryToValue(findPreference("notification_endTime"), String.class);
+            //bindPreferenceSummaryToValue(findPreference("@string/switch_notificationSounds"), Boolean.class);
+            bindPreferenceSummaryToValue(findPreference("switch_notificationVibration"), Boolean.class);
         }
 
         @Override
@@ -243,10 +243,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    /**
-     * This fragment shows data and sync preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class DataSyncPreferenceFragment extends PreferenceFragment {
         @Override
@@ -259,7 +256,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            //bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+            // wallpaper preferences change listener
+            bindPreferenceSummaryToValue(findPreference("switch_changeHomeWallpaper"), Boolean.class);
+            bindPreferenceSummaryToValue(findPreference("switch_changeLockWallpaper"), Boolean.class);
         }
 
         @Override
@@ -273,3 +272,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 }
+
+//onCreate
+//bindPreferenceSummaryToValue(Preference preference)
+//preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+//Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener()
+//public boolean onPreferenceChange(Preference preference, Object newValue)

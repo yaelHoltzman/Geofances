@@ -27,26 +27,23 @@ public class GeofenceManager extends AppCompatActivity {
 
     private static final String TAG = GeofenceManager.class.getSimpleName();
     private GeofencingClient mGeofencingClient;
-    private List<Geofence> mGeofenceList;
 
     private static final long GEO_DURATION = 60 * 60 * 1000;
-    private static final String GEOFENCE_REQ_ID = "My Geofence";
+    private static final String GEOFENCE_REQ_ID = "Home"; //TODO this will be the type of geofence
     private static final float GEOFENCE_RADIUS = 100.0f; // in meters
     private PendingIntent geofencePendingIntent;
     private final int GEOFENCE_REQ_CODE = 0;
-    private GoogleApiClient googleApiClient;
-    private static int numberOfGeofences;
+    private static int numberOfGeofences = 0;
     private final String KEY_GEOFENCE_LAT = "GEOFENCE LATITUDE";
     private final String KEY_GEOFENCE_LON = "GEOFENCE LONGITUDE";
-    //private final Context mContext;
-    private User user;
+    private static User user = User.getInstance();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        user = User.getInstance();
+        //user = User.getInstance();
 
         Log.d(TAG, "init mGeofencingClient");
         mGeofencingClient = LocationServices.getGeofencingClient(user.getmContext());
@@ -70,8 +67,6 @@ public class GeofenceManager extends AppCompatActivity {
         Log.d(TAG, "createGeofencePendingIntent");
         if ( geofencePendingIntent!= null )
             return geofencePendingIntent;
-
-        User user = User.getInstance();
 
         Intent intent = new Intent(user.getmContext(), GeofenceTrasitionService.class);
 

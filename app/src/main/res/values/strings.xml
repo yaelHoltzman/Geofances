@@ -138,5 +138,7 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="isFirstRun">true</string>
 
+    <string name="NotificationTitle">Health Advertiser Notification!</string>
+
 
 </resources>

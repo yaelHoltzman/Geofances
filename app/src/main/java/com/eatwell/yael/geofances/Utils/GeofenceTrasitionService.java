@@ -8,9 +8,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.eatwell.yael.geofances.Notifications.NotificationChooser;
-import com.eatwell.yael.geofances.Notifications.NotificationChooserI;
+import com.eatwell.yael.geofances.UserPreferences.User;
 import com.eatwell.yael.geofances.Wallpaper.WallPaperChooser;
-import com.eatwell.yael.geofances.Wallpaper.WallPaperChooserI;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofenceStatusCodes;
 import com.google.android.gms.location.GeofencingEvent;
@@ -21,6 +20,7 @@ import java.util.List;
 public class GeofenceTrasitionService extends IntentService {
 
     private static final String TAG = GeofenceTrasitionService.class.getSimpleName();
+    private static User user = User.getInstance();
 
 
     public GeofenceTrasitionService() {
@@ -30,6 +30,7 @@ public class GeofenceTrasitionService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
+
         // Handling errors
         if ( geofencingEvent.hasError() ) {
             String errorMsg = getErrorString(geofencingEvent.getErrorCode() );
@@ -37,6 +38,7 @@ public class GeofenceTrasitionService extends IntentService {
             return;
         }
 
+        //get transition
         int geoFenceTransition = geofencingEvent.getGeofenceTransition();
         // Check if the transition type is of interest
         if ( geoFenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER ||
@@ -46,12 +48,12 @@ public class GeofenceTrasitionService extends IntentService {
 
 
             //check if user requests to receive notifications
-            Context context = getApplicationContext();
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+            //TODO- better to extract boolean from user and change from preference only there?
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(user.getmContext());
 
             boolean isNotificationsOn = sharedPref.getBoolean("switch_recieveNotifications", false);
-            //TODO: add this switch in general preferences
-            boolean isWallPaperOn = sharedPref.getBoolean("switch_changeWallpaper", true);
+            boolean isWallPaperOn = sharedPref.getBoolean("switch_changeHomeWallpaper", true)
+                    || sharedPref.getBoolean("switch_changeLockWallpaper", true) ;
 
             if (isNotificationsOn) {
                 // Send notification
