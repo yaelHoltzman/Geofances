@@ -3,6 +3,8 @@ package com.eatwell.yael.geofances.UI;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.eatwell.yael.geofances.Goals.Goal;
+import com.eatwell.yael.geofances.Goals.GoalMindfulEating;
 import com.eatwell.yael.geofances.R;
 import com.eatwell.yael.geofances.UserPreferences.User;
 import com.eatwell.yael.geofances.Wallpaper.WallPaperChanger;
@@ -19,6 +21,9 @@ public class TestActivity extends AppCompatActivity {
 
         user = User.getInstance();
         user.setmContext(getApplicationContext());
-        WallPaperChooser.ChangeWallPaper("Home", "GEOFENCE_TRANSITION_EXIT");
+        Goal goal = new GoalMindfulEating();
+
+
+        //WallPaperChooser.ChangeWallPaper("Home", "GEOFENCE_TRANSITION_EXIT");
     }
 }

@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.eatwell.yael.geofances.R;
-import com.eatwell.yael.geofances.Utils.LocationSelector;
 
 public class Goal_Setting extends AppCompatActivity {
 

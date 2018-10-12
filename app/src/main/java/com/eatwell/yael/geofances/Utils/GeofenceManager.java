@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -166,7 +167,12 @@ public class GeofenceManager extends AppCompatActivity {
     // Saving GeoFence marker with prefs mng
     public void saveGeofence(Marker geoFenceMarker) {
         Log.d(TAG, "saveGeofence()");
-        SharedPreferences sharedPref = getPreferences( Context.MODE_PRIVATE );
+
+        User user = User.getInstance();
+        Context context = user.getmContext();
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+
         SharedPreferences.Editor editor = sharedPref.edit();
 
         editor.putLong( KEY_GEOFENCE_LAT, Double.doubleToRawLongBits( geoFenceMarker.getPosition().latitude ));
@@ -177,7 +183,11 @@ public class GeofenceManager extends AppCompatActivity {
     public LatLng recoverGeofence() {
         Log.d(TAG, "recoverGeofence");
         LatLng latLngRecovered;
-        SharedPreferences sharedPref = getPreferences( Context.MODE_PRIVATE );
+
+        User user = User.getInstance();
+        Context context = user.getmContext();
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 
         if ( sharedPref.contains( KEY_GEOFENCE_LAT ) && sharedPref.contains( KEY_GEOFENCE_LON )) {
             double lat = Double.longBitsToDouble( sharedPref.getLong( KEY_GEOFENCE_LAT, -1 ));

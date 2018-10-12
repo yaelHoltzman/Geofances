@@ -2,6 +2,10 @@ package com.eatwell.yael.geofances.Goals;
 
 import android.util.Log;
 import android.util.Pair;
+
+import com.eatwell.yael.geofances.UserPreferences.User;
+import com.eatwell.yael.geofances.Utils.ConfigHelper;
+
 import java.util.HashMap;
 
 
@@ -12,7 +16,7 @@ public class GoalMindfulEating implements Goal {
     private HashMap<Pair<String, String>, String> notifications;
     private HashMap<Pair<String, String>, String> wallPPUrls;
 
-    GoalMindfulEating()
+    public GoalMindfulEating()
     {
         notifications = new HashMap<>();
         wallPPUrls = new HashMap<>();
@@ -26,12 +30,16 @@ public class GoalMindfulEating implements Goal {
         Pair<String, String> keyPair4 = new Pair<>("Work", "GEOFENCE_TRANSITION_EXIT");
         notifications.put(keyPair4, "go excersice if you have time");
 
-        //TODO read from config file or storage??
+        //TODO read from config.WppUrls file or storage??
+        User user = User.getInstance();
+        //String test = ConfigHelper.getConfigValue(user.getmContext(), "MindfulEatingHomeGEOFENCE_TRANSITION_ENTER");
 
         Pair<String, String> keyPair5 = new Pair<>("Home", "GEOFENCE_TRANSITION_ENTER");
-        wallPPUrls.put(keyPair5, "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/Mindful1.jpg?alt=media&token=e5ea2288-df11-4c16-bbb2-34404acea7f6");
+        wallPPUrls.put(keyPair5, /*ConfigHelper.getConfigValue(user.getmContext(), "MindfulEatingHomeGEOFENCE_TRANSITION_ENTER"));*/
+                "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/Mindful1.jpg?alt=media&token=e5ea2288-df11-4c16-bbb2-34404acea7f6");
         Pair<String, String> keyPair6 = new Pair<>("Home", "GEOFENCE_TRANSITION_EXIT");
-        wallPPUrls.put(keyPair6, "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/Mindful2.jpg?alt=media&token=a831df41-71f0-4a63-9b82-30da5e1b6c94");
+        wallPPUrls.put(keyPair6, /*ConfigHelper.getConfigValue(user.getmContext(), "MindfulEatingHomeGEOFENCE_TRANSITION_EXIT"));*/
+                "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/Mindful2.jpg?alt=media&token=a831df41-71f0-4a63-9b82-30da5e1b6c94");
         Pair<String, String> keyPair7 = new Pair<>("Work", "GEOFENCE_TRANSITION_ENTER");
         wallPPUrls.put(keyPair7, "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/Mindful3.jpg?alt=media&token=4f0db69d-48cd-4043-bdb7-c80429d0af65");
         Pair<String, String> keyPair8 = new Pair<>("Work", "GEOFENCE_TRANSITION_EXIT");

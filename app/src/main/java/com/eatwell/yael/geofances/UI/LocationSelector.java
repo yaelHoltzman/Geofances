@@ -1,4 +1,4 @@
-package com.eatwell.yael.geofances.Utils;
+package com.eatwell.yael.geofances.UI;
 
 
 import android.content.Intent;
@@ -9,8 +9,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.eatwell.yael.geofances.R;
-import com.eatwell.yael.geofances.UI.Notification;
 import com.eatwell.yael.geofances.UserPreferences.User;
+import com.eatwell.yael.geofances.Utils.GeofenceManager;
+import com.eatwell.yael.geofances.Utils.Permission_Checker;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -99,20 +100,22 @@ public class LocationSelector extends AppCompatActivity {
     }
 
     protected void loadMap(GoogleMap googleMap) {
-            map = googleMap;
 
-            if ( !permissionChecker.checkPermission(this) ) {
-                permissionChecker.askPermission(this);
-            }
-            map.setMyLocationEnabled(true);
+        if ( !permissionChecker.checkPermission(this) ) {
+            permissionChecker.askPermission(this);
         }
+
+        map = googleMap;
+
+        map.setMyLocationEnabled(true);
+    }
 
 
     public void onClick(View view) {
 
         geofenceManager.startGeofence(locationMarker, user.getmContext());
 
-        Intent intent = new Intent(this, Notification.class);
+        Intent intent = new Intent(this, Home.class);
         startActivity(intent);
     }
 }
