@@ -17,9 +17,15 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.eatwell.yael.geofances.R;
+import com.eatwell.yael.geofances.UserPreferences.User;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -196,6 +202,29 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
 
         @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            LinearLayout v = (LinearLayout) super.onCreateView(inflater, container, savedInstanceState);
+
+            if (/*User.isFirstRun()*/true) {
+
+                Button btn = new Button(getActivity().getApplicationContext());
+                btn.setText("Next");
+
+                v.addView(btn);
+                btn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity().getApplicationContext(), LocationSelector.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+
+            return v;
+        }
+
+
+
+        @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
@@ -271,6 +300,33 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             return super.onOptionsItemSelected(item);
         }
     }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class LocationPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.location_setting);
+            setHasOptionsMenu(true);
+
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+            bindPreferenceSummaryToValue(findPreference("switch_location_change"), Boolean.class);
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
 }
 
 //onCreate

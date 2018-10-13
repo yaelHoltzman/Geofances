@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.eatwell.yael.geofances.Goals.Goal;
 import com.eatwell.yael.geofances.Goals.GoalFactory;
+import com.eatwell.yael.geofances.R;
 import com.eatwell.yael.geofances.UI.Goal_Setting;
 import com.eatwell.yael.geofances.UI.SettingsActivity;
 import com.google.android.gms.maps.model.LatLng;
@@ -40,6 +41,8 @@ public class User extends Activity {
 
     private static boolean isWallPaperHome = true;
     private static boolean isWallPaperLock = true;
+
+    private boolean isThisFirstRun = true;
 
 
 
@@ -87,14 +90,13 @@ public class User extends Activity {
         return isNotificationsOn;
     }
 
-    private User(/*Context context*/) {
+    private User() {
         currentGoalIndex = 0;
         numberOfGoals = 0;
         goalArrayList = new ArrayList<>();
         userLocations = new HashMap<>();
-        isNotificationsOn = false;
+        isNotificationsOn = true;
         goalFactory = new GoalFactory();
-
 
         //TODO - use Loadgoals in Onclick Next of usergoal settings and remove from here?
         //go over the goals and add them to the list
@@ -124,6 +126,27 @@ public class User extends Activity {
                 Log.d(TAG, "Number of goals: " + numberOfGoals);
             }
         }
+    }
+
+    //preference getter functions
+    public boolean isNotificationsOn() {
+        return isNotificationsOn;
+    }
+
+    public boolean isVibration() {
+        return isVibrateOn;
+    }
+
+    public boolean isFirstRun() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        isThisFirstRun= prefs.getBoolean(getString(R.string.isFirstRun), false);
+
+        return isThisFirstRun;
+    }
+
+    public void setFirstRun(boolean firstRun) {
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                    .putBoolean(getString(R.string.isFirstRun), firstRun).commit();
     }
 
 }

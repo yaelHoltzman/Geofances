@@ -23,6 +23,6 @@ public class NotificationChooser extends Fragment {
 
         //send notification to user
         FirebaseMessagingService fbms = new FirebaseMessagingService();
-        fbms.SendNotification("New Notification", notification);
+        fbms.SendNotification(/*getString(R.string.pref_title_new_message_notifications)*/"New notification", notification);
     }
 }

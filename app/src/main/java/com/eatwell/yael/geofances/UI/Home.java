@@ -22,13 +22,7 @@ public class Home extends AppCompatActivity {
         user.setmContext(getApplicationContext());
 
         //if this is the app's first run, start from "start" activity
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean isFirstRun= prefs.getBoolean(getString(R.string.isFirstRun), false);
-
-        if (isFirstRun) {
-
-            getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
-                    .putBoolean("isFirstRun", false).commit();
+        if (user.isFirstRun()) {
 
             //show start activity
             startActivity(new Intent(Home.this, StartActivity.class));
@@ -36,6 +30,8 @@ public class Home extends AppCompatActivity {
                     .show();
         }
 
+        //TODO- should I pass it into onResume?
+        user.setFirstRun(false);
         setContentView(R.layout.activity_home);
     }
 

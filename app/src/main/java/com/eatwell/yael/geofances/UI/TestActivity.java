@@ -24,6 +24,6 @@ public class TestActivity extends AppCompatActivity {
         Goal goal = new GoalMindfulEating();
 
 
-        //WallPaperChooser.ChangeWallPaper("Home", "GEOFENCE_TRANSITION_EXIT");
+        WallPaperChooser.ChangeWallPaper("Home", "GEOFENCE_TRANSITION_EXIT");
     }
 }

@@ -6,13 +6,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.eatwell.yael.geofances.R;
+import com.eatwell.yael.geofances.UserPreferences.User;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
@@ -20,12 +20,20 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     private static final String TAG = FirebaseMessagingService.class.getSimpleName();
     private static NotificationManager notifManager;
     private static NotificationChannel mChannel;
-    private static final String CHANNEL_ID = "0";
+    private final String CHANNEL_ID = "0";
+            //User.getInstance().getmContext().getResources().getString(R.string.channel_id);
+    private User user;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         Log.d(TAG, "From: " + remoteMessage.getFrom());
+        user = User.getInstance();
+
+        //check user preference regarding receiving notifications
+        if (!user.isNotificationsOn()) {
+            return;
+        }
 
         String message = remoteMessage.getNotification().getBody();
         String title = remoteMessage.getNotification().getTitle();
@@ -43,9 +51,14 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         PendingIntent pendingIntent;
         NotificationCompat.Builder builder;
 
+        Log.d(TAG, "SendNotification");
+
         if (notifManager == null) {
             notifManager = (NotificationManager) getSystemService
                     (Context.NOTIFICATION_SERVICE);
+        }
+        if (user == null) {
+            user = User.getInstance();
         }
 
         //create an intent for the activity which will be presented when opening notification
@@ -59,10 +72,10 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 NotificationChannel mChannel = new NotificationChannel
                         (CHANNEL_ID, title, importance);
                 mChannel.setDescription(message);
-                mChannel.enableVibration(true);
+                mChannel.enableVibration(user.isVibration());
                 mChannel.setVibrationPattern(new long[]
                         {100, 200, 300, 400, 500, 400, 300, 200, 400});
-                mChannel.setName("channel");
+                mChannel.setName(getString(R.string.channel_name));
                 notifManager.createNotificationChannel(mChannel);
             }
         }
@@ -71,14 +84,14 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        builder.setContentTitle(title)
+        builder.setContentTitle("Title")
         .setSmallIcon(R.mipmap.app_logo)
         .setContentText(message)
         .setDefaults(Notification.DEFAULT_ALL)
-        .setAutoCancel(true)
+        .setAutoCancel(true) /*
         .setLargeIcon(BitmapFactory.decodeResource
-                (getResources(), R.mipmap.app_logo))
-        .setBadgeIconType(R.mipmap.app_logo)
+                (getResources(), R.mipmap.app_logo))*/
+        //.setBadgeIconType(R.mipmap.app_logo)
         .setContentIntent(pendingIntent)
         .setSound(RingtoneManager.getDefaultUri
                 (RingtoneManager.TYPE_NOTIFICATION))

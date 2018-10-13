@@ -8,25 +8,34 @@ import com.eatwell.yael.geofances.UserPreferences.User;
 //import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 
 
 public class WallPaperChanger /*implements WallPaperChangerI*/ {
 
     public static void ChangeWallPaper(String wPpUrl) {
 
-        User user = User.getInstance();
+        final User user = User.getInstance();
 
         /*Bitmap wPpBitmap =Picasso
                 .load(wPpUrl)
                 .get();
-*/
-        Bitmap wPpBitmap = FirebaseStorageImpl.getImageBitmap(wPpUrl);
+ */
+
+        FirebaseStorageImpl.getImageBitmap(wPpUrl, new Consumer<Bitmap>() {
+            @Override
+            public void accept(Bitmap bitmap) {
+
+                try {
+                    WallpaperManager.getInstance(user.getmContext()).setBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
-        try {
-            WallpaperManager.getInstance(user.getmContext()).setBitmap(wPpBitmap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+
     }
 }

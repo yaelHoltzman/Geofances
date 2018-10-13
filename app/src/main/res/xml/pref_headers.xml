@@ -16,5 +16,9 @@
         android:fragment="com.eatwell.yael.geofances.UI.SettingsActivity$DataSyncPreferenceFragment"
         android:icon="@drawable/ic_sync_black_24dp"
         android:title="Wallpaper" />
+    <header
+        android:fragment="com.eatwell.yael.geofances.UI.SettingsActivity$LocationPreferenceFragment"
+        android:icon="@drawable/ic_action_location"
+        android:title="Location" />
 
 </preference-headers>

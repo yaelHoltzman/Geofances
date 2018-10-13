@@ -1,4 +1,8 @@
 <resources>
+
+    <string name="channel_id">HAchannel_id</string>
+    <string name="channel_name">HAchannelName</string>
+
     <string name="app_name">Geofances</string>
     <string name="lat">Lat:</string>
     <string name="lng">Long:</string>
@@ -139,6 +143,9 @@
     <string name="isFirstRun">true</string>
 
     <string name="NotificationTitle">Health Advertiser Notification!</string>
+    <string name="setting_button">setting_button</string>
+    <string name="large_applogo">large_appLogo</string>
+    <string name="new_notification">New Notification</string>
 
 
 </resources>

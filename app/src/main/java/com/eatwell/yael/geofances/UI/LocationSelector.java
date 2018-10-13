@@ -35,6 +35,8 @@ public class LocationSelector extends AppCompatActivity {
 
     //private String locationType;
     private Button setLocationButton;
+    //TODO- add locationType option
+    private String locationType;
 
     private GoogleMap map;
     private SupportMapFragment mapFragment;
@@ -89,6 +91,7 @@ public class LocationSelector extends AppCompatActivity {
                 map.moveCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 12.0f));
 
+                //TODO- should be in OnClick
                 geofenceManager.startGeofence(locationMarker, user.getmContext());
             }
 
@@ -106,7 +109,6 @@ public class LocationSelector extends AppCompatActivity {
         }
 
         map = googleMap;
-
         map.setMyLocationEnabled(true);
     }
 
