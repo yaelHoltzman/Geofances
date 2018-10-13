@@ -7,8 +7,7 @@ import com.eatwell.yael.geofances.Goals.Goal;
 import com.eatwell.yael.geofances.Goals.GoalMindfulEating;
 import com.eatwell.yael.geofances.R;
 import com.eatwell.yael.geofances.UserPreferences.User;
-import com.eatwell.yael.geofances.Wallpaper.WallPaperChanger;
-import com.eatwell.yael.geofances.Wallpaper.WallPaperChooser;
+import com.eatwell.yael.geofances.WallpaperUtils.WallPaperChooser;
 
 public class TestActivity extends AppCompatActivity {
 

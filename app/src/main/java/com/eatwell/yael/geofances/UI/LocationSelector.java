@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eatwell.yael.geofances.R;
 import com.eatwell.yael.geofances.UserPreferences.User;
@@ -24,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -35,29 +39,14 @@ public class LocationSelector extends AppCompatActivity {
 
     //private String locationType;
     private Button setLocationButton;
-    //TODO- add locationType option
-    private String locationType;
+    private String locationType; //TODO change to enum
 
     private GoogleMap map;
     private SupportMapFragment mapFragment;
     private Marker locationMarker;
-    private Location lastLocation;
-    private LocationRequest mLocationRequest;
-    private LocationCallback mLocationCallback;
-    private FusedLocationProviderClient mFusedLocationClient;
-    private boolean mRequestingLocationUpdates;
     private static User user = User.getInstance();
-
     private Permission_Checker permissionChecker;
     private GeofenceManager geofenceManager;
-
-    // TODO currently defined in mili seconds.
-    // This number in extremely low, and should be used only for debug
-    private final int UPDATE_INTERVAL =  1000 * 60;
-    private final int FASTEST_INTERVAL = 900 * 60;
-
-    // TODO check whether location settings are satisfied
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +55,10 @@ public class LocationSelector extends AppCompatActivity {
 
         //user = User.getInstance();
         setLocationButton = (Button) findViewById(R.id.setLocationButton);
+        TextView textView = (TextView) findViewById(R.id.skipText);
         permissionChecker = new Permission_Checker();
         geofenceManager = new GeofenceManager();
+        locationType = "Home";
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -76,6 +67,20 @@ public class LocationSelector extends AppCompatActivity {
                 @Override
                 public void onMapReady(GoogleMap map) {
                     loadMap(map);
+
+                    if (user.isHomeLocationSet()) {
+                        map.clear();
+                        LatLng homeLatLng = user.getLocation(locationType);
+
+                        if (homeLatLng == null) {
+                            return;
+                        }
+
+                        locationMarker = map.addMarker(new MarkerOptions().position(homeLatLng).title(locationType));
+                        map.moveCamera(CameraUpdateFactory.newLatLng(homeLatLng));
+                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(homeLatLng, 12.0f));
+                    }
+
                 }
             });
         }
@@ -90,14 +95,14 @@ public class LocationSelector extends AppCompatActivity {
                 locationMarker = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getName().toString()));
                 map.moveCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 12.0f));
-
-                //TODO- should be in OnClick
-                geofenceManager.startGeofence(locationMarker, user.getmContext());
             }
 
             @Override
             public void onError(Status status) {
 
+                Log.e(TAG, status.toString());
+                Toast.makeText(LocationSelector.this, "Map error", Toast.LENGTH_LONG)
+                        .show();
             }
         });
     }
@@ -115,7 +120,17 @@ public class LocationSelector extends AppCompatActivity {
 
     public void onClick(View view) {
 
+        user.removeLocation(locationType);
+
         geofenceManager.startGeofence(locationMarker, user.getmContext());
+        user.addLocation(locationType, locationMarker.getPosition());
+        user.setIsHomeLocationSet(true);
+
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
+    }
+
+    public void onClickSkip(View view) {
 
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);

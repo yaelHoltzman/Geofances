@@ -20,8 +20,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     private static final String TAG = FirebaseMessagingService.class.getSimpleName();
     private static NotificationManager notifManager;
     private static NotificationChannel mChannel;
-    private final String CHANNEL_ID = "0";
-            //User.getInstance().getmContext().getResources().getString(R.string.channel_id);
+    private final String CHANNEL_ID = User.getInstance().getmContext().getResources().getString(R.string.channel_id);
     private User user;
 
     @Override
@@ -75,7 +74,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 mChannel.enableVibration(user.isVibration());
                 mChannel.setVibrationPattern(new long[]
                         {100, 200, 300, 400, 500, 400, 300, 200, 400});
-                mChannel.setName(getString(R.string.channel_name));
+                mChannel.setName(user.getmContext().getResources().getString(R.string.channel_name));
                 notifManager.createNotificationChannel(mChannel);
             }
         }

@@ -27,8 +27,23 @@ tools:context=".UI.LocationSelector">
         android:id="@+id/setLocationButton"
         android:layout_width="150dp"
         android:layout_height="70dp"
-        android:layout_centerVertical="true"
-        android:text="@string/set_location"
-        tools:layout_below="@+id/map" />
+        android:layout_below="@+id/map"
+        android:layout_centerVertical="false"
+        android:text="@string/set_home_address"
+        tools:layout_below="@+id/map"
+        tools:onClick="onClick" />
+
+    <TextView
+        android:id="@+id/skipText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="29dp"
+        android:onClick="onClickSkip"
+        android:text="@string/skip"
+        android:textColor="@color/colorAccent"
+        android:textColorHighlight="@color/colorAccent" />
 
 </RelativeLayout>

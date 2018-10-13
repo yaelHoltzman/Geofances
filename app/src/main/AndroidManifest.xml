@@ -54,11 +54,8 @@
 
 
         <activity android:name=".Utils.GeofenceManager" />
-        <activity android:name=".Utils.Permission_Checker" />
         <activity android:name=".UI.TestActivity">
         </activity>
-        <activity android:name=".Firebase_Utils.FirebaseStorageImpl" />
-
 
 
         <activity android:name=".UI.Home">
@@ -70,21 +67,19 @@
         <activity android:name=".UI.Goal_Setting" />
         <activity android:name=".UI.LocationSelector" />
         <activity
-            android:name=".UI.LoginActivity"
-            android:label="title_activity_login">
-        </activity>
-        <activity android:name=".UI.ResetPassword" />
-        <activity android:name=".UI.Notification" />
-
-        <activity
-            android:name=".UI.SettingsActivity"
-            android:label="@string/title_activity_settings">
-
+            android:name=".UI.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".UI.ResetPassword" />
+        <activity android:name=".UI.Notification" />
+
+        <activity
+            android:name=".UI.Settings"
+            android:label="@string/title_activity_settings">
         </activity>
 
 

@@ -41,7 +41,7 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends AppCompatPreferenceActivity {
+public class Settings extends AppCompatPreference {
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -121,6 +121,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 
+        User user = User.getInstance();
+
         // Trigger the listener immediately with the preference's
         // current value.
 
@@ -129,12 +131,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     PreferenceManager
                             .getDefaultSharedPreferences(preference.getContext())
                             .getString(preference.getKey(), ""));
+
+            user.LoadPreferences();
         } else if (type == Boolean.class) {
             sBindPreferenceSummaryToValueListener.onPreferenceChange(
                     preference,
                     PreferenceManager
                             .getDefaultSharedPreferences(preference.getContext())
                             .getBoolean(preference.getKey(), true));
+            user.LoadPreferences();
         }
 
 
@@ -180,14 +185,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
-                || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
-                || NotificationPreferenceFragment.class.getName().equals(fragmentName);
+                || GoalPreferenceFragment.class.getName().equals(fragmentName)
+                || WallpaperPreferenceFragment.class.getName().equals(fragmentName)
+                || NotificationPreferenceFragment.class.getName().equals(fragmentName)
+                || LocationPreferenceFragment.class.getName().equals(fragmentName);
     }
 
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class GeneralPreferenceFragment extends PreferenceFragment {
+    public static class GoalPreferenceFragment extends PreferenceFragment {
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -205,7 +211,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             LinearLayout v = (LinearLayout) super.onCreateView(inflater, container, savedInstanceState);
 
-            if (/*User.isFirstRun()*/true) {
+            final User user = User.getInstance();
+
+            if (user.isFirstRun()) {
 
                 Button btn = new Button(getActivity().getApplicationContext());
                 btn.setText("Next");
@@ -213,6 +221,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 v.addView(btn);
                 btn.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
+                        user.LoadGoals();
+
                         Intent intent = new Intent(getActivity().getApplicationContext(), LocationSelector.class);
                         startActivity(intent);
                     }
@@ -223,12 +233,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
 
 
-
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                startActivity(new Intent(getActivity(), Settings.class));
                 return true;
             }
             return super.onOptionsItemSelected(item);
@@ -265,7 +274,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                startActivity(new Intent(getActivity(), Settings.class));
                 return true;
             }
             return super.onOptionsItemSelected(item);
@@ -274,7 +283,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class DataSyncPreferenceFragment extends PreferenceFragment {
+    public static class WallpaperPreferenceFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -294,7 +303,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                startActivity(new Intent(getActivity(), Settings.class));
                 return true;
             }
             return super.onOptionsItemSelected(item);
@@ -320,7 +329,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                startActivity(new Intent(getActivity(), Settings.class));
                 return true;
             }
             return super.onOptionsItemSelected(item);

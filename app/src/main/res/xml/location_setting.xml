@@ -7,4 +7,11 @@
         android:summary="switch on if you would like to receive notifications and change wallpaper based on location "
         android:defaultValue="true" />
 
+    <Preference
+        android:key="setHomeGeodence"
+        android:title="Set Home location"
+        android:summary="set or change your home location" >
+        <intent android:action="com.eatwell.yael.geofances.UI.LocationSelector"/>
+    </Preference>
+
 </PreferenceScreen>

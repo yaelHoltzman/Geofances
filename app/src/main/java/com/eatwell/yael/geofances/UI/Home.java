@@ -1,8 +1,6 @@
 package com.eatwell.yael.geofances.UI;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,19 +24,23 @@ public class Home extends AppCompatActivity {
 
             //show start activity
             startActivity(new Intent(Home.this, StartActivity.class));
-            Toast.makeText(Home.this, "First Run", Toast.LENGTH_LONG)
+            Toast.makeText(Home.this, "Welcome", Toast.LENGTH_LONG)
                     .show();
         }
 
-        //TODO- should I pass it into onResume?
-        user.setFirstRun(false);
         setContentView(R.layout.activity_home);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        User user = User.getInstance();
+        user.setFirstRun(false);
+    }
+
     public void onClick(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
+        Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
     }
 }
-
-

@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GeofenceManager extends AppCompatActivity {
@@ -131,13 +132,36 @@ public class GeofenceManager extends AppCompatActivity {
     }
 
     // Clear Geofence
-    public void clearGeofence() {
+    public void clearGeofence (final String geofenceId) {
+        List<String> geoFenceToRemove = new ArrayList<>();
+        geoFenceToRemove.add(geofenceId);
+
+        mGeofencingClient.removeGeofences(geoFenceToRemove)
+                .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Geofences removed
+                        user.removeLocation(geofenceId);
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Failed to remove geofences
+                        Log.e(TAG, "clearGeofence failed");
+                    }
+                });
+    }
+
+
+
+    public void clearAllGeofence() {
         mGeofencingClient.removeGeofences(createGeofencePendingIntent())
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // Geofences removed
-                        --numberOfGeofences;
+                        //TODO- ?, ;
                     }
                 })
                 .addOnFailureListener(this, new OnFailureListener() {

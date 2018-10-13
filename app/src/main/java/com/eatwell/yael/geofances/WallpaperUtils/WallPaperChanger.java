@@ -1,4 +1,4 @@
-package com.eatwell.yael.geofances.Wallpaper;
+package com.eatwell.yael.geofances.WallpaperUtils;
 
 import android.app.WallpaperManager;
 import android.graphics.Bitmap;
@@ -16,11 +16,6 @@ public class WallPaperChanger /*implements WallPaperChangerI*/ {
     public static void ChangeWallPaper(String wPpUrl) {
 
         final User user = User.getInstance();
-
-        /*Bitmap wPpBitmap =Picasso
-                .load(wPpUrl)
-                .get();
- */
 
         FirebaseStorageImpl.getImageBitmap(wPpUrl, new Consumer<Bitmap>() {
             @Override

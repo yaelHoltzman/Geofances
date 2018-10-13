@@ -1,15 +1,14 @@
 package com.eatwell.yael.geofances.Utils;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.eatwell.yael.geofances.Notifications.NotificationChooser;
+import com.eatwell.yael.geofances.NotificationsUtils.NotificationChooser;
 import com.eatwell.yael.geofances.UserPreferences.User;
-import com.eatwell.yael.geofances.Wallpaper.WallPaperChooser;
+import com.eatwell.yael.geofances.WallpaperUtils.WallPaperChooser;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofenceStatusCodes;
 import com.google.android.gms.location.GeofencingEvent;
@@ -51,9 +50,8 @@ public class GeofenceTrasitionService extends IntentService {
             //TODO- better to extract boolean from user and change from preference only there?
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(user.getmContext());
 
-            boolean isNotificationsOn = sharedPref.getBoolean("switch_recieveNotifications", false);
-            boolean isWallPaperOn = sharedPref.getBoolean("switch_changeHomeWallpaper", true)
-                    || sharedPref.getBoolean("switch_changeLockWallpaper", true) ;
+            boolean isNotificationsOn = user.isNotificationsOn();
+            boolean isWallPaperOn = user.isWallPaperHome() || user.isWallPaperLock();
 
             if (isNotificationsOn) {
                 // Send notification
