@@ -10,7 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-public class Permission_Checker extends AppCompatActivity {
+public class Permission_Checker {
     private static final String TAG = Permission_Checker.class.getSimpleName();
 
     private static final int REQ_PERMISSION = 999;
