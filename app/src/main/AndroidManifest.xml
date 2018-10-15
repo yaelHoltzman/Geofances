@@ -22,13 +22,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
         <uses-library android:name="com.google.android.maps" />
-
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -40,9 +37,7 @@
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/channel_id" />
 
-
         <service android:name=".Utils.GeofenceTrasitionService" />
-
         <service
             android:name=".Firebase_Utils.FirebaseMessagingService"
             android:enabled="true"
@@ -52,37 +47,47 @@
             </intent-filter>
         </service>
 
-
-        <activity android:name=".Utils.GeofenceManager" />
-        <activity android:name=".UI.TestActivity">
-        </activity>
+        <activity android:name=".UI.TestActivity" />
 
 
-        <activity android:name=".UI.Home">
-        </activity>
-        <activity android:name=".UI.StartActivity">
-        </activity>
-        <activity android:name=".UI.SignUp">
-        </activity>
-        <activity android:name=".UI.Goal_Setting" />
-        <activity android:name=".UI.LocationSelector" />
+
         <activity
-            android:name=".UI.LoginActivity">
+            android:name=".UI.Home"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.StartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.SignUp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.GoalSettings"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.LocationSelector"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".UI.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.ResetPassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.Notification"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.Settings"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_settings" />
+        <activity android:name=".UI.FirstActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.ResetPassword" />
-        <activity android:name=".UI.Notification" />
-
-        <activity
-            android:name=".UI.Settings"
-            android:label="@string/title_activity_settings">
-        </activity>
-
-
     </application>
 
 </manifest>

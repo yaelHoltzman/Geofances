@@ -4,25 +4,20 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.eatwell.yael.geofances.R;
 import com.eatwell.yael.geofances.UserPreferences.User;
@@ -30,19 +25,8 @@ import com.eatwell.yael.geofances.UserPreferences.User;
 import java.lang.reflect.Type;
 import java.util.List;
 
-/**
- * A {@link PreferenceActivity} that presents a set of application settings. On
- * handset devices, settings are presented as a single list. On tablets,
- * settings are split by category, with category headers shown to the left of
- * the list of settings.
- * <p>
- * See <a href="http://developer.android.com/design/patterns/settings.html">
- * Android Design: Settings</a> for design guidelines and the <a
- * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
- * API Guide</a> for more information on developing a Settings UI.
- */
-public class Settings extends AppCompatPreference {
 
+public class Settings extends AppCompatPreference {
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -63,29 +47,6 @@ public class Settings extends AppCompatPreference {
                         index >= 0
                                 ? listPreference.getEntries()[index]
                                 : null);
-
-            } else if (preference instanceof RingtonePreference) {
-                // For ringtone preferences, look up the correct display value
-                // using RingtoneManager.
-                if (TextUtils.isEmpty(stringValue)) {
-                    // Empty values correspond to 'silent' (no ringtone).
-                    preference.setSummary(R.string.pref_ringtone_silent);
-
-                } else {
-                    Ringtone ringtone = RingtoneManager.getRingtone(
-                            preference.getContext(), Uri.parse(stringValue));
-
-                    if (ringtone == null) {
-                        // Clear the summary if there was a lookup error.
-                        preference.setSummary(null);
-                    } else {
-                        // Set the summary to reflect the new ringtone display
-                        // name.
-                        String name = ringtone.getTitle(preference.getContext());
-                        preference.setSummary(name);
-                    }
-                }
-
             } else if (value instanceof Boolean) {
                 Boolean boolValue = (Boolean) value;
                 preference.setSummary(boolValue.toString());
@@ -125,21 +86,20 @@ public class Settings extends AppCompatPreference {
 
         // Trigger the listener immediately with the preference's
         // current value.
-
         if (type == String.class) {
             sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
                     PreferenceManager
                             .getDefaultSharedPreferences(preference.getContext())
                             .getString(preference.getKey(), ""));
 
-            user.LoadPreferences();
+            user.loadPreferences();
         } else if (type == Boolean.class) {
             sBindPreferenceSummaryToValueListener.onPreferenceChange(
                     preference,
                     PreferenceManager
                             .getDefaultSharedPreferences(preference.getContext())
                             .getBoolean(preference.getKey(), true));
-            user.LoadPreferences();
+            user.loadPreferences();
         }
 
 
@@ -212,18 +172,22 @@ public class Settings extends AppCompatPreference {
             LinearLayout v = (LinearLayout) super.onCreateView(inflater, container, savedInstanceState);
 
             final User user = User.getInstance();
+            TextView textView = new TextView(getActivity().getApplicationContext());
+            textView.setText("Choose the goals of interest in order to get personalized content");
+            v.addView(textView);
 
             if (user.isFirstRun()) {
 
                 Button btn = new Button(getActivity().getApplicationContext());
-                btn.setText("Next");
+                btn.setText(user.getmContext().getResources().getString(R.string.next));
 
                 v.addView(btn);
                 btn.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        user.LoadGoals();
+                        user.loadGoals();
 
                         Intent intent = new Intent(getActivity().getApplicationContext(), LocationSelector.class);
+                        intent.putExtra("locationType", "Home");
                         startActivity(intent);
                     }
                 });

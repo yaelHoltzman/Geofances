@@ -3,7 +3,7 @@
     <string name="channel_id">HAchannel_id</string>
     <string name="channel_name">HAchannelName</string>
 
-    <string name="app_name">Geofances</string>
+    <string name="app_name">Health Advertiser</string>
     <string name="lat">Lat:</string>
     <string name="lng">Long:</string>
     <string name="button">Button</string>
@@ -149,6 +149,27 @@
     <string name="skip">Skip</string>
     <string name="fruits_pic">fruits_pic</string>
     <string name="start_pic">start_pic</string>
+    <string name="firstactivitylogo">firstActivityLogo</string>
 
+    <string name="preference1">Mindful</string>
+    <string name="preference2">Weightloss</string>
+
+    <string name="notification1">Don\'t forget to eat a healthy balanced meal</string>
+    <string name="notification2">Eat at least 5 vegetables per day for a healthy soul and body</string>
+    <string name="notification3">Eating in front of TV increases amount eaten by 30%! eat infront of a table, no distractions</string>
+    <string name="notification4">Pay attention to your hunger and satiety levels, listen to your body</string>
+    <string name="notification5">Eat only until satiated, this will keep your energy high </string>
+    <string name="notification6">When hungry- eat a balanced meal, provide your body\'s needs</string>
+    <string name="notification7">Go exercise if you have time, you will thank yourself later</string>
+    <string name="notification8">Eating late at night may cause weight gain, try to avoid the night snacking</string>
+
+    <string name="home">Home</string>
+    <string name="work">Work</string>
+    <string name="geofence_enter">GEOFENCE_TRANSITION_ENTER</string>
+    <string name="geofence_exit">GEOFENCE_TRANSITION_EXIT</string>
+
+    <string name="database_imageurl_rootName">ImagesUrls</string>
+    <string name="change_wallpaper">change wallpaper</string>
+    <string name="send_notification">Send notification</string>
 
 </resources>

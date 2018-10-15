@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.StartActivity">
+    tools:context=".UI.StartActivity"
+    tools:layout_editor_absoluteY="81dp">
 
     <Button
         android:id="@+id/start_button"
@@ -13,44 +14,45 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="255dp"
+        android:layout_marginBottom="20dp"
         android:onClick="onClick"
         android:text="@string/start"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/already_SU_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/already_SU_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="175dp"
         android:text="@string/already_signed_up"
-        app:layout_constraintBaseline_toBaselineOf="@+id/logIn_text"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/logIn_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="9dp"
         android:onClick="onClickLogin"
         android:text="@string/login"
+        android:textColor="@color/colorAccent"
         android:textColorHighlight="@color/colorAccent"
-        app:layout_constraintStart_toEndOf="@+id/already_SU_text"
-        app:layout_constraintTop_toBottomOf="@+id/start_button"
+        app:layout_constraintStart_toStartOf="@+id/already_SU_text"
+        app:layout_constraintTop_toBottomOf="@+id/already_SU_text"
         tools:textColorHighlight="@color/colorAccent" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="204dp"
-        android:layout_height="289dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="13dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="27dp"
         android:contentDescription="@string/start_pic"
-        app:layout_constraintBottom_toTopOf="@+id/start_button"
+        app:layout_constraintBottom_toTopOf="@+id/already_SU_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -30,6 +30,7 @@ public class GeofenceTrasitionService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
 
+
         // Handling errors
         if ( geofencingEvent.hasError() ) {
             String errorMsg = getErrorString(geofencingEvent.getErrorCode() );
@@ -46,22 +47,28 @@ public class GeofenceTrasitionService extends IntentService {
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
 
 
-            //check if user requests to receive notifications
-            //TODO- better to extract boolean from user and change from preference only there?
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(user.getmContext());
-
+            //check if user requests to receive notifications and change wallpaper
             boolean isNotificationsOn = user.isNotificationsOn();
             boolean isWallPaperOn = user.isWallPaperHome() || user.isWallPaperLock();
 
             if (isNotificationsOn) {
-                // Send notification
                 NotificationChooser.SendNextNotification(getGeofenceTrasition(geoFenceTransition),
                         getTriggeringGeofences(geoFenceTransition, triggeringGeofences));
             }
 
             if (isWallPaperOn) {
                 WallPaperChooser.ChangeWallPaper(getGeofenceTrasition(geoFenceTransition),
-                        getTriggeringGeofences(geoFenceTransition, triggeringGeofences));
+                        getTriggeringGeofences(geoFenceTransition, triggeringGeofences), new WallPaperChooser.CallbacksWallPaperChooser() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+
+                            @Override
+                            public void onFail(String msg) {
+
+                            }
+                        });
             }
         }
     }

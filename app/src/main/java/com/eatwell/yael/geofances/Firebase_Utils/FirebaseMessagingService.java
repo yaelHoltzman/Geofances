@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -22,6 +23,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     private static NotificationChannel mChannel;
     private final String CHANNEL_ID = User.getInstance().getmContext().getResources().getString(R.string.channel_id);
     private User user;
+    private static int notificationNumber = 0;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -52,23 +54,24 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         Log.d(TAG, "SendNotification");
 
-        if (notifManager == null) {
-            notifManager = (NotificationManager) getSystemService
-                    (Context.NOTIFICATION_SERVICE);
-        }
         if (user == null) {
             user = User.getInstance();
         }
 
+        if (notifManager == null) {
+            notifManager = (NotificationManager) user.getmContext().getSystemService
+                    (Context.NOTIFICATION_SERVICE);
+        }
+
         //create an intent for the activity which will be presented when opening notification
-        intent = new Intent(this, com.eatwell.yael.geofances.UI.Notification.class);
+        intent = new Intent(user.getmContext()/*this*/, com.eatwell.yael.geofances.UI.Notification.class);
 
         //Build.VERSION.SDK_INT- The SDK version of the software currently running on this hardware device
         //To avoid executing that block of code on devices older than Android 8.0 (because of channel):
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             if (mChannel == null) {
-                NotificationChannel mChannel = new NotificationChannel
+                mChannel = new NotificationChannel
                         (CHANNEL_ID, title, importance);
                 mChannel.setDescription(message);
                 mChannel.enableVibration(user.isVibration());
@@ -82,15 +85,15 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         builder = new NotificationCompat.Builder(this, CHANNEL_ID);
 
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        builder.setContentTitle("Title")
-        .setSmallIcon(R.mipmap.app_logo)
+        pendingIntent = PendingIntent.getActivity(user.getmContext(), 0, intent, 0);
+        builder.setContentTitle(title)
+        .setSmallIcon(R.drawable.yael_element)
         .setContentText(message)
         .setDefaults(Notification.DEFAULT_ALL)
-        .setAutoCancel(true) /*
-        .setLargeIcon(BitmapFactory.decodeResource
-                (getResources(), R.mipmap.app_logo))*/
-        //.setBadgeIconType(R.mipmap.app_logo)
+        .setAutoCancel(true)
+//        .setLargeIcon(BitmapFactory.decodeResource
+  //              (getResources(), R.drawable.yael_element))
+    //    .setBadgeIconType(R.drawable.yael_element)
         .setContentIntent(pendingIntent)
         .setSound(RingtoneManager.getDefaultUri
                 (RingtoneManager.TYPE_NOTIFICATION))
@@ -99,6 +102,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
         Notification notification = builder.build();
-        notifManager.notify(0, notification);
+        notifManager.notify(++notificationNumber, notification);
     }
 }

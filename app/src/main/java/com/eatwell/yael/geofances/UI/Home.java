@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.eatwell.yael.geofances.R;
 import com.eatwell.yael.geofances.UserPreferences.User;
@@ -14,29 +14,31 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
 
-        //first activity updates activity context in user singleton
         User user = User.getInstance();
         user.setmContext(getApplicationContext());
-
-        //if this is the app's first run, start from "start" activity
         if (user.isFirstRun()) {
-
-            //show start activity
-            startActivity(new Intent(Home.this, StartActivity.class));
-            Toast.makeText(Home.this, "Welcome", Toast.LENGTH_LONG)
-                    .show();
+            user.setFirstRun(false);
         }
 
-        setContentView(R.layout.activity_home);
+        TextView testText = (TextView)findViewById(R.id.testTextView);
+        testText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToTest();
+            }
+        });
+    }
+
+    private void goToTest() {
+        Intent intent = new Intent(this, TestActivity.class);
+        startActivity(intent);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        User user = User.getInstance();
-        user.setFirstRun(false);
     }
 
     public void onClick(View view) {

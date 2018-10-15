@@ -65,12 +65,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
+        User user = User.getInstance();
+        user.setmContext(getApplicationContext());
 
         //get authentication
         auth = FirebaseAuth.getInstance();
-
-        User user = User.getInstance();
-        user.setmContext(getApplicationContext());
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -343,7 +342,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 showProgress(false);
 
 
-                                Intent intent = new Intent(LoginActivity.this, Goal_Setting.class);
+                                Intent intent = new Intent(LoginActivity.this, GoalSettings.class);
                                 startActivity(intent);
                                 finish();
                             }

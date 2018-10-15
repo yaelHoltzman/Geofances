@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.eatwell.yael.geofances.R;
 
-public class Goal_Setting extends AppCompatActivity {
+public class GoalSettings extends AppCompatActivity {
 
     private Context context;
 
@@ -20,7 +20,8 @@ public class Goal_Setting extends AppCompatActivity {
                 .replace(android.R.id.content, new Settings.GoalPreferenceFragment())
                 .commit();
         PreferenceManager.setDefaultValues(this, R.xml.goal_setting, false);
-        context = getApplicationContext();
+
+
 
     }
 }

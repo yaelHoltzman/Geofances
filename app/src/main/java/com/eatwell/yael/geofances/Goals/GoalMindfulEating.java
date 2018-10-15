@@ -3,8 +3,9 @@ package com.eatwell.yael.geofances.Goals;
 import android.util.Log;
 import android.util.Pair;
 
+import com.eatwell.yael.geofances.Firebase_Utils.FirebaseStorageImpl;
+import com.eatwell.yael.geofances.R;
 import com.eatwell.yael.geofances.UserPreferences.User;
-import com.eatwell.yael.geofances.Utils.ConfigHelper;
 
 import java.util.HashMap;
 
@@ -12,27 +13,59 @@ import java.util.HashMap;
 public class GoalMindfulEating implements Goal {
 
     private static final String TAG = GoalMindfulEating.class.getSimpleName();
+    private static String mGoalName;
+
 
     private HashMap<Pair<String, String>, String> notifications;
+    private User user;
+
+    @Override
+    public String GetNextNotification(String location, String geofenceTransition) {
+        Pair<String, String> keyPair = new Pair<>(location, geofenceTransition);
+        String newNotification = notifications.get(keyPair);
+        if (newNotification == null) {
+            Log.e(TAG, "null new Notification");
+            newNotification = " ";
+        }
+        return newNotification;
+    }
+
+
+    @Override
+    public String GetWallPaperUrl(String location, String geofenceTransition) {
+        //return FirebaseStorageImpl.getWallpaperUrl(mGoalName + location + geofenceTransition);
+
+        Pair<String, String> keyPair = new Pair<>(location, geofenceTransition);
+        String wppUrl = wallPPUrls.get(keyPair);
+        if (wppUrl == null) {
+            Log.e(TAG, "null new wpp Url");
+        }
+        return wppUrl;
+    }
+
+
+
     private HashMap<Pair<String, String>, String> wallPPUrls;
 
-    public GoalMindfulEating()
-    {
+    public GoalMindfulEating() {
         notifications = new HashMap<>();
+
+        user = User.getInstance();
+        mGoalName = user.getmContext().getString(R.string.preference1);
+
+        Pair<String, String> keyPair1 = new Pair<>(user.getmContext().getResources().getString(R.string.home), user.getmContext().getResources().getString(R.string.geofence_enter));
+        notifications.put(keyPair1, user.getmContext().getResources().getString(R.string.notification1));
+        Pair<String, String> keyPair2 = new Pair<>(user.getmContext().getResources().getString(R.string.home), user.getmContext().getResources().getString(R.string.geofence_exit));
+        notifications.put(keyPair2, user.getmContext().getResources().getString(R.string.notification2));
+        Pair<String, String> keyPair3 = new Pair<>(user.getmContext().getResources().getString(R.string.work), user.getmContext().getResources().getString(R.string.geofence_enter));
+        notifications.put(keyPair3, user.getmContext().getResources().getString(R.string.notification3));
+        Pair<String, String> keyPair4 = new Pair<>(user.getmContext().getResources().getString(R.string.work), user.getmContext().getResources().getString(R.string.geofence_exit));
+        notifications.put(keyPair4, user.getmContext().getResources().getString(R.string.notification4));
+
+
+
+
         wallPPUrls = new HashMap<>();
-
-        Pair<String, String> keyPair1 = new Pair<>("Home", "GEOFENCE_TRANSITION_ENTER");
-        notifications.put(keyPair1, "Don't forget to eat a healthy balanced meal");
-        Pair<String, String> keyPair2 = new Pair<>("Home", "GEOFENCE_TRANSITION_EXIT");
-        notifications.put(keyPair2, "Eat at least 5 vegetables per day :)");
-        Pair<String, String> keyPair3 = new Pair<>("Work", "GEOFENCE_TRANSITION_ENTER");
-        notifications.put(keyPair3, "Snacks are empty calories, when hungry- eat a balanced meal");
-        Pair<String, String> keyPair4 = new Pair<>("Work", "GEOFENCE_TRANSITION_EXIT");
-        notifications.put(keyPair4, "go excersice if you have time");
-
-        //TODO read from config.WppUrls file or storage??
-        User user = User.getInstance();
-        //String test = ConfigHelper.getConfigValue(user.getmContext(), "MindfulEatingHomeGEOFENCE_TRANSITION_ENTER");
 
         Pair<String, String> keyPair5 = new Pair<>("Home", "GEOFENCE_TRANSITION_ENTER");
         wallPPUrls.put(keyPair5, /*ConfigHelper.getConfigValue(user.getmContext(), "MindfulEatingHomeGEOFENCE_TRANSITION_ENTER"));*/
@@ -46,27 +79,6 @@ public class GoalMindfulEating implements Goal {
         wallPPUrls.put(keyPair8, "https://firebasestorage.googleapis.com/v0/b/geofances-f9a17.appspot.com/o/Mindful4.jpg?alt=media&token=53386b53-f107-40ef-bc7f-cd4d65322b42");
 
     }
-
-    @Override
-    public String GetNextNotification(String location, String geofenceTransition) {
-        Pair<String, String> keyPair = new Pair<>(location, geofenceTransition);
-        String newNotification = notifications.get(keyPair);
-        if (newNotification == null) {
-            Log.e(TAG, "null new Notification");
-            //TODO- anything else should be executed?
-        }
-        return newNotification;
-    }
-
-
-    @Override
-    public String GetWallPaperUrl(String location, String geofenceTransition) {
-        Pair<String, String> keyPair = new Pair<>(location, geofenceTransition);
-        String wppUrl = wallPPUrls.get(keyPair);
-        if (wppUrl == null) {
-            Log.e(TAG, "null new wpp Url");
-        }
-        return wppUrl;
-    }
-
 }
+
+

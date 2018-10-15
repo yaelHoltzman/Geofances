@@ -1,6 +1,5 @@
 package com.eatwell.yael.geofances.UserPreferences;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -36,6 +35,8 @@ public class User {
     private static boolean isSoundOn = true;
     private static boolean isVibrateOn = true;
     private static boolean isHomeLocationSet = false;
+    private static boolean isWorkLocationSet = false;
+
 
     private static boolean isWallPaperHome = true;
     private static boolean isWallPaperLock = true;
@@ -70,18 +71,38 @@ public class User {
 
     public void addLocation(String locationType, LatLng latLng) {
         userLocations.put(locationType, latLng);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putLong( "KEY_GEOFENCE_LAT" + locationType, (long)latLng.latitude);
+        editor.putLong( "KEY_GEOFENCE_LON" + locationType, (long)latLng.longitude);
+        editor.apply();
     }
 
     public void removeLocation(String locationType) {
         userLocations.remove(locationType);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove("KEY_GEOFENCE_LAT" + locationType);
+        editor.remove("KEY_GEOFENCE_LON" + locationType);
     }
 
-    public void setIsHomeLocationSet(boolean val) {
-        isHomeLocationSet = val;
+    public void setIsLocationSet(String locationType, boolean val) {
+
+        if (locationType.equals(mContext.getResources().getString(R.string.home))) {
+            isHomeLocationSet = val;
+        } else if (locationType.equals(mContext.getResources().getString(R.string.work))) {
+            isWorkLocationSet= val;
+        }
     }
 
-    public boolean isHomeLocationSet() {
-        return isHomeLocationSet;
+    public boolean isLocationSet(String locationType) {
+        boolean res = false;
+
+        if (locationType.equals(mContext.getResources().getString(R.string.home))) {
+            res =  isHomeLocationSet;
+        } else if (locationType.equals(mContext.getResources().getString(R.string.work))) {
+            res =  isWorkLocationSet;
+        }
+        return res;
     }
 
     public void setmContext(Context context) {
@@ -96,9 +117,9 @@ public class User {
         return numberOfGoals;
     }
 
-    public Goal GetGoal() {
-        Log.d(TAG, "GetGoal");
-        //LoadGoals(goalArrayList);
+    public Goal getGoal() {
+        Log.d(TAG, "getGoal");
+        //loadGoals();
 
         if (numberOfGoals == 0) {
             Log.i(TAG, "request for goal, 0 goals");
@@ -111,16 +132,12 @@ public class User {
         return goal;
     }
 
-    public LatLng GetLocation(String locationName) {
 
-        return userLocations.get(locationName);
-    }
-
-    public void SetLocation(LatLng latLng, String locationName) {
+    public void setLocation(LatLng latLng, String locationName) {
         userLocations.put(locationName, latLng);
     }
 
-    public boolean IsGettingNotifications() {
+    public boolean isGettingNotifications() {
 
         return isNotificationsOn;
     }
@@ -133,15 +150,9 @@ public class User {
         isNotificationsOn = true;
         goalFactory = new GoalFactory();
 
-        //sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
-
-        //TODO - use Loadgoals in Onclick Next of usergoal settings and remove from here?
-        //go over the goals and add them to the list
-        //LoadGoals(goalArrayList);
-        //TODO make sure number of goals is not 0?
     }
 
-    public void LoadPreferences() {
+    public void loadPreferences() {
         if (sharedPref == null) {
             sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
         }
@@ -154,7 +165,9 @@ public class User {
         //TODO add notification recieving time preference
     }
 
-    public void LoadGoals () {
+    public void loadGoals() {
+
+        goalFactory.setPreferences();
 
         if (sharedPref == null) {
             sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -196,7 +209,7 @@ public class User {
         }
 
         sharedPref.edit()
-                    .putBoolean(getmContext().getResources().getString(R.string.isFirstRun), firstRun).commit();
+                    .putBoolean(getmContext().getResources().getString(R.string.isFirstRun), firstRun).apply();
     }
 
 }

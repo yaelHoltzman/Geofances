@@ -5,7 +5,8 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="400dp"
-    tools:context=".UI.Goal_Setting">
+    android:layout_marginTop="30dp"
+    tools:context=".UI.GoalSettings">
 
 
 </RelativeLayout>

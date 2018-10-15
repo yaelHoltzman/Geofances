@@ -1,10 +1,8 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- These settings headers are only used on tablets. -->
-
     <header
         android:fragment="com.eatwell.yael.geofances.UI.Settings$GoalPreferenceFragment"
-        android:icon="@drawable/ic_info_black_24dp"
+        android:icon="@drawable/aim"
         android:title="Goals" />
 
     <header
@@ -14,7 +12,7 @@
 
     <header
         android:fragment="com.eatwell.yael.geofances.UI.Settings$WallpaperPreferenceFragment"
-        android:icon="@drawable/ic_sync_black_24dp"
+        android:icon="@drawable/wpp_icon"
         android:title="Wallpaper" />
 
     <header

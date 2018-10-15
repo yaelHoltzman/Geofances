@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * A {@link android.preference.PreferenceActivity} which implements and proxies the necessary calls
+ * A {@link android.preference.PreferenceActivity} which implements the necessary calls
  * to be used with AppCompat.
  */
+//This activity is a helper class that SettingsActivity uses to maintain backwards
+// compatibility with previous versions of Android.
 public abstract class AppCompatPreference extends PreferenceActivity {
 
     //enables using AppCompatActivity features without extending it
