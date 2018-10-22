@@ -18,6 +18,7 @@ public class FirstActivity extends AppCompatActivity {
         //create user singleton object
         User user = User.getInstance();
         user.setmContext(getApplicationContext());
+        user.loadPreferences();
 
         user.setFirstRun(true); //TODO
 
@@ -27,8 +28,7 @@ public class FirstActivity extends AppCompatActivity {
             Toast.makeText(FirstActivity.this, "Welcome", Toast.LENGTH_LONG)
                     .show();
         } else {
-            //startActivity(new Intent(FirstActivity.this, Home.class));
-            startActivity(new Intent(FirstActivity.this, TestActivity.class));
+            startActivity(new Intent(FirstActivity.this, Home.class));
         }
     }
 }

@@ -27,18 +27,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Objects;
+
 public class LocationSelector extends AppCompatActivity {
 
     private static final String TAG = LocationSelector.class.getSimpleName();
-
-    //private String locationType;
-    private Button setLocationButton;
     private String mlocationType; //TODO change to enum
 
     private GoogleMap map;
-    private SupportMapFragment mapFragment;
     private Marker locationMarker;
-    private User user = User.getInstance();
+    private User user;
     private GeofenceManager geofenceManager;
 
     @Override
@@ -49,7 +47,8 @@ public class LocationSelector extends AppCompatActivity {
         user = User.getInstance();
         user.setmContext(getApplicationContext());
 
-        setLocationButton = (Button) findViewById(R.id.setLocationButton);
+        Button setLocationButton;
+        setLocationButton = /*(Button)*/findViewById(R.id.setLocationButton);
         setLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +56,16 @@ public class LocationSelector extends AppCompatActivity {
                 goToNextScreen();
             }
         });
-        TextView textView = (TextView) findViewById(R.id.skipText);
+        TextView textView = /*(TextView)*/findViewById(R.id.skipText);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToNextScreen();
+            }
+        });
+
+
+
         geofenceManager = new GeofenceManager(this, mlocationType);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -84,7 +92,7 @@ public class LocationSelector extends AppCompatActivity {
             });
         }
 
-        mlocationType = getIntent().getExtras().getString("locationType");
+        mlocationType = Objects.requireNonNull(getIntent().getExtras()).getString("locationType");
 
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
@@ -122,7 +130,8 @@ public class LocationSelector extends AppCompatActivity {
     private void handleLocation() {
 
         if (user.isLocationSet(mlocationType)) {
-            user.removeLocation(mlocationType);
+            //user.removeLocation(mlocationType);
+            geofenceManager.clearGeofence(mlocationType);
         }
 
         geofenceManager.startGeofence(locationMarker, user.getmContext());

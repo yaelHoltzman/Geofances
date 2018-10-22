@@ -32,13 +32,13 @@ public class GoalWeightLoss implements Goal {
 
     @Override
     public String GetWallPaperUrl(String location, String geofenceTransition) {
-        //return FirebaseStorageImpl.getWallpaperUrl(mGoalName + location + geofenceTransition);
-        Pair<String, String> keyPair = new Pair<>(location, geofenceTransition);
+        return FirebaseStorageImpl.getWallpaperUrl(mGoalName + location + geofenceTransition);
+        /*Pair<String, String> keyPair = new Pair<>(location, geofenceTransition);
         String wppUrl = wallPPUrls.get(keyPair);
         if (wppUrl == null) {
             Log.e(TAG, "null new wpp Url");
-        }
-        return wppUrl;
+        }*/
+        //return wppUrl;
     }
 
     public GoalWeightLoss() {

@@ -1,22 +1,13 @@
 package com.eatwell.yael.geofances.Goals;
 
-import android.content.Context;
-
-import com.eatwell.yael.geofances.R;
-import com.eatwell.yael.geofances.UserPreferences.User;
-
 import java.util.ArrayList;
-
-
 
 public class GoalFactory {
 
-    private static ArrayList<String> preferences;
-    private static User user = User.getInstance();
+    private ArrayList<String> preferences;
 
     public GoalFactory() {
-
-
+        setPreferences();
     }
 
     public Goal getGoal (String goalKey) {
@@ -34,10 +25,9 @@ public class GoalFactory {
         return preferences;
     }
 
-    public void setPreferences () {
+    private void setPreferences () {
         preferences = new ArrayList<>();
         preferences.add("Mindful");
         preferences.add("Weightloss");
     }
-
 }

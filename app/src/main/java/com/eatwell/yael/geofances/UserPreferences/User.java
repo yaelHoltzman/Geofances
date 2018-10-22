@@ -17,37 +17,36 @@ import java.util.HashMap;
 public class User {
 
     private static final String TAG = User.class.getSimpleName();
+
     //Goal Indicators
     private ArrayList<Goal> goalArrayList;
     private int currentGoalIndex;
     private int numberOfGoals;
 
-    //app
+    //app attributes
     private Context mContext;
     private SharedPreferences sharedPref;
+
+    //GoalFactory
     private GoalFactory goalFactory;
 
     //Location Indicators
     private HashMap<String, LatLng> userLocations;
 
-    //boolean vals settings
-    private static boolean isNotificationsOn = true;
-    private static boolean isSoundOn = true;
-    private static boolean isVibrateOn = true;
-    private static boolean isHomeLocationSet = false;
-    private static boolean isWorkLocationSet = false;
-
-
-    private static boolean isWallPaperHome = true;
-    private static boolean isWallPaperLock = true;
-
-    private boolean isThisFirstRun = true;
-
+    //boolean values settings
+    private boolean isNotificationsOn;
+    //private boolean isSoundOn;
+    private boolean isVibrateOn;
+    private boolean isHomeLocationSet;
+    private boolean isWorkLocationSet;
+    private boolean isWallPaperHome;
+    private boolean isWallPaperLock;
+    private boolean isThisFirstRun;
 
     //user Instance
     private static User userInstance;
 
-    public static User getInstance() {
+    public synchronized static User getInstance() {
 
         if (userInstance == null) {
             userInstance = new User();
@@ -57,14 +56,7 @@ public class User {
     }
 
 
-    public boolean isWallPaperHome() {
-        return isWallPaperHome;
-    }
-
-    public boolean isWallPaperLock() {
-        return isWallPaperLock;
-    }
-
+    //location util functions
     public LatLng getLocation (String locationType) {
         return userLocations.get(locationType);
     }
@@ -83,6 +75,7 @@ public class User {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.remove("KEY_GEOFENCE_LAT" + locationType);
         editor.remove("KEY_GEOFENCE_LON" + locationType);
+        editor.apply();
     }
 
     public void setIsLocationSet(String locationType, boolean val) {
@@ -105,6 +98,8 @@ public class User {
         return res;
     }
 
+
+    //context util functions
     public void setmContext(Context context) {
         mContext = context;
     }
@@ -113,6 +108,8 @@ public class User {
        return mContext;
     }
 
+
+    //user goals util fuctions
     public int getNumberOfGoals() {
         return numberOfGoals;
     }
@@ -133,15 +130,8 @@ public class User {
     }
 
 
-    public void setLocation(LatLng latLng, String locationName) {
-        userLocations.put(locationName, latLng);
-    }
 
-    public boolean isGettingNotifications() {
-
-        return isNotificationsOn;
-    }
-
+    //Constructor + ctor util functions
     private User() {
         currentGoalIndex = 0;
         numberOfGoals = 0;
@@ -150,6 +140,7 @@ public class User {
         isNotificationsOn = true;
         goalFactory = new GoalFactory();
 
+        //loadPreferences();
     }
 
     public void loadPreferences() {
@@ -158,7 +149,7 @@ public class User {
         }
 
         isNotificationsOn = sharedPref.getBoolean("switch_recieveNotifications", true);
-        isSoundOn = sharedPref.getBoolean("@string/switch_notificationSounds", true);
+        //isSoundOn = sharedPref.getBoolean("@string/switch_notificationSounds", true);
         isVibrateOn= sharedPref.getBoolean("switch_notificationVibration", true);
         isWallPaperLock = sharedPref.getBoolean("switch_changeLockWallpaper", true);
         isWallPaperHome = sharedPref.getBoolean("switch_changeHomeWallpaper", true);
@@ -167,7 +158,7 @@ public class User {
 
     public void loadGoals() {
 
-        goalFactory.setPreferences();
+        //goalFactory.setPreferences();
 
         if (sharedPref == null) {
             sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -186,6 +177,8 @@ public class User {
         }
     }
 
+
+
     //preference getter functions
     public boolean isNotificationsOn() {
         return isNotificationsOn;
@@ -195,12 +188,22 @@ public class User {
         return isVibrateOn;
     }
 
+    public boolean isWallPaperHome() {
+        return isWallPaperHome;
+    }
+
+    public boolean isWallPaperLock() {
+        return isWallPaperLock;
+    }
+
     public boolean isFirstRun() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         isThisFirstRun= prefs.getBoolean(getmContext().getResources().getString(R.string.isFirstRun), false);
 
         return isThisFirstRun;
     }
+
+
 
     public void setFirstRun(boolean firstRun) {
 

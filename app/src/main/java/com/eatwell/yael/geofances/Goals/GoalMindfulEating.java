@@ -1,5 +1,7 @@
 package com.eatwell.yael.geofances.Goals;
 
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Pair;
 
@@ -10,7 +12,7 @@ import com.eatwell.yael.geofances.UserPreferences.User;
 import java.util.HashMap;
 
 
-public class GoalMindfulEating implements Goal {
+public class GoalMindfulEating extends AppCompatActivity implements Goal {
 
     private static final String TAG = GoalMindfulEating.class.getSimpleName();
     private static String mGoalName;
@@ -18,6 +20,7 @@ public class GoalMindfulEating implements Goal {
 
     private HashMap<Pair<String, String>, String> notifications;
     private User user;
+
 
     @Override
     public String GetNextNotification(String location, String geofenceTransition) {
@@ -33,21 +36,31 @@ public class GoalMindfulEating implements Goal {
 
     @Override
     public String GetWallPaperUrl(String location, String geofenceTransition) {
+
+        user = User.getInstance();
+
+        Intent intent = new Intent(/*GoalMindfulEating.this*/user.getmContext() ,FirebaseStorageImpl.class);
+        user.getmContext().startService(intent);
+        return " ";
+
         //return FirebaseStorageImpl.getWallpaperUrl(mGoalName + location + geofenceTransition);
 
-        Pair<String, String> keyPair = new Pair<>(location, geofenceTransition);
+        /*Pair<String, String> keyPair = new Pair<>(location, geofenceTransition);
         String wppUrl = wallPPUrls.get(keyPair);
         if (wppUrl == null) {
             Log.e(TAG, "null new wpp Url");
         }
-        return wppUrl;
+
+        return wppUrl;*/
     }
+
+
 
 
 
     private HashMap<Pair<String, String>, String> wallPPUrls;
 
-    public GoalMindfulEating() {
+    GoalMindfulEating() {
         notifications = new HashMap<>();
 
         user = User.getInstance();
@@ -61,8 +74,6 @@ public class GoalMindfulEating implements Goal {
         notifications.put(keyPair3, user.getmContext().getResources().getString(R.string.notification3));
         Pair<String, String> keyPair4 = new Pair<>(user.getmContext().getResources().getString(R.string.work), user.getmContext().getResources().getString(R.string.geofence_exit));
         notifications.put(keyPair4, user.getmContext().getResources().getString(R.string.notification4));
-
-
 
 
         wallPPUrls = new HashMap<>();

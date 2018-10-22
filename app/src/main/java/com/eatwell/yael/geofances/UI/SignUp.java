@@ -22,24 +22,25 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SignUp extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword;
-    private Button btnSignIn, btnSignUp;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Button btnSignIn, btnSignUp;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-        btnSignIn = (Button) findViewById(R.id.sign_in_button);
-        btnSignUp = (Button) findViewById(R.id.sign_up_button);
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        btnSignIn = /*(Button)*/findViewById(R.id.sign_in_button);
+        btnSignUp = /*(Button)*/ findViewById(R.id.sign_up_button);
+        inputEmail = /*(EditText) */findViewById(R.id.email);
+        inputPassword =/* (EditText)*/ findViewById(R.id.password);
+        progressBar = /*(ProgressBar)*/ findViewById(R.id.progressBar);
 
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {

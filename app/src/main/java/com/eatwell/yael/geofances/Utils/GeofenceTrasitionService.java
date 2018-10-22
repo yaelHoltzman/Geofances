@@ -2,9 +2,8 @@ package com.eatwell.yael.geofances.Utils;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.eatwell.yael.geofances.NotificationsUtils.NotificationChooser;
 import com.eatwell.yael.geofances.UserPreferences.User;
@@ -19,7 +18,7 @@ import java.util.List;
 public class GeofenceTrasitionService extends IntentService {
 
     private static final String TAG = GeofenceTrasitionService.class.getSimpleName();
-    private static User user = User.getInstance();
+    private User user = User.getInstance();
 
 
     public GeofenceTrasitionService() {
@@ -53,20 +52,22 @@ public class GeofenceTrasitionService extends IntentService {
 
             if (isNotificationsOn) {
                 NotificationChooser.SendNextNotification(getGeofenceTrasition(geoFenceTransition),
-                        getTriggeringGeofences(geoFenceTransition, triggeringGeofences));
+                        getTriggeringGeofences(triggeringGeofences));
             }
 
             if (isWallPaperOn) {
                 WallPaperChooser.ChangeWallPaper(getGeofenceTrasition(geoFenceTransition),
-                        getTriggeringGeofences(geoFenceTransition, triggeringGeofences), new WallPaperChooser.CallbacksWallPaperChooser() {
+                        getTriggeringGeofences(triggeringGeofences), new WallPaperChooser.CallbacksWallPaperChooser() {
                             @Override
                             public void onSuccess() {
-
+                                Toast toast = new Toast(user.getmContext());
+                                toast.setText("Wallpaper changed");
+                                toast.show();
                             }
 
                             @Override
                             public void onFail(String msg) {
-
+                                Log.e(TAG, "wallpaper change error");
                             }
                         });
             }
@@ -74,7 +75,7 @@ public class GeofenceTrasitionService extends IntentService {
     }
 
 
-    private String getTriggeringGeofences(int geoFenceTransition, List<Geofence> triggeringGeofences) {
+    private String getTriggeringGeofences(List<Geofence> triggeringGeofences) {
         // get the ID of each geofence triggered
         ArrayList<String> triggeringGeofencesList = new ArrayList<>();
         for ( Geofence geofence : triggeringGeofences ) {

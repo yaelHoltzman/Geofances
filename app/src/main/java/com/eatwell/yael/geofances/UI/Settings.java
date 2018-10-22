@@ -68,6 +68,23 @@ public class Settings extends AppCompatPreference {
                 & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setupActionBar();
+    }
+
+    /**
+     * Set up the {@link android.app.ActionBar}, if the API is available.
+     */
+    private void setupActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // Show the Up button in the action bar.
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
     /**
      * Binds a preference's summary to its value. More specifically, when the
      * preference's value is changed, its summary (line of text below the
@@ -103,23 +120,6 @@ public class Settings extends AppCompatPreference {
         }
 
 
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setupActionBar();
-    }
-
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            // Show the Up button in the action bar.
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
     }
 
     /**
@@ -173,7 +173,8 @@ public class Settings extends AppCompatPreference {
 
             final User user = User.getInstance();
             TextView textView = new TextView(getActivity().getApplicationContext());
-            textView.setText("Choose the goals of interest in order to get personalized content");
+            textView.setText(getString(R.string.goal_setting_text));
+            assert v != null;
             v.addView(textView);
 
             if (user.isFirstRun()) {
@@ -225,12 +226,9 @@ public class Settings extends AppCompatPreference {
             // updated to reflect the new value, per the Android Design
             // guidelines.
 
-            // notifications preferences change listener
             bindPreferenceSummaryToValue(findPreference("switch_receiveNotification"), Boolean.class);
-
             bindPreferenceSummaryToValue(findPreference("notification_startTime"), String.class);
             bindPreferenceSummaryToValue(findPreference("notification_endTime"), String.class);
-            //bindPreferenceSummaryToValue(findPreference("@string/switch_notificationSounds"), Boolean.class);
             bindPreferenceSummaryToValue(findPreference("switch_notificationVibration"), Boolean.class);
         }
 

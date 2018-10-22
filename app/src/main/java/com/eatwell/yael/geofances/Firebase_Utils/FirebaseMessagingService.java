@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -16,14 +15,16 @@ import com.eatwell.yael.geofances.R;
 import com.eatwell.yael.geofances.UserPreferences.User;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Objects;
+
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     private static final String TAG = FirebaseMessagingService.class.getSimpleName();
-    private static NotificationManager notifManager;
-    private static NotificationChannel mChannel;
+    private static int notificationNumber = 0;
+
+    private NotificationChannel mChannel;
     private final String CHANNEL_ID = User.getInstance().getmContext().getResources().getString(R.string.channel_id);
     private User user;
-    private static int notificationNumber = 0;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -36,7 +37,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             return;
         }
 
-        String message = remoteMessage.getNotification().getBody();
+        String message = Objects.requireNonNull(remoteMessage.getNotification()).getBody();
         String title = remoteMessage.getNotification().getTitle();
 
         // Check if message contains a data payload.
@@ -44,27 +45,25 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
         }
 
-        SendNotification(title, message + remoteMessage.getData());
+        sendNotification(title, message + remoteMessage.getData());
     }
 
-    public void SendNotification(String title, String message) {
+    public void sendNotification(String title, String message) {
         Intent intent;
         PendingIntent pendingIntent;
         NotificationCompat.Builder builder;
+        NotificationManager notifManager;
 
         Log.d(TAG, "SendNotification");
 
-        if (user == null) {
-            user = User.getInstance();
-        }
-
-        if (notifManager == null) {
-            notifManager = (NotificationManager) user.getmContext().getSystemService
+        user = User.getInstance();
+        notifManager = (NotificationManager) user.getmContext().getSystemService
                     (Context.NOTIFICATION_SERVICE);
-        }
 
         //create an intent for the activity which will be presented when opening notification
-        intent = new Intent(user.getmContext()/*this*/, com.eatwell.yael.geofances.UI.Notification.class);
+        intent = new Intent(user.getmContext(), com.eatwell.yael.geofances.UI.Notification.class);
+        intent.putExtra("msg", message);
+        intent.putExtra("title", title);
 
         //Build.VERSION.SDK_INT- The SDK version of the software currently running on this hardware device
         //To avoid executing that block of code on devices older than Android 8.0 (because of channel):
@@ -82,18 +81,18 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             }
         }
 
-        builder = new NotificationCompat.Builder(this, CHANNEL_ID);
+        builder = new NotificationCompat.Builder(user.getmContext(), CHANNEL_ID);
 
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         pendingIntent = PendingIntent.getActivity(user.getmContext(), 0, intent, 0);
         builder.setContentTitle(title)
+        // .setLargeIcon(BitmapFactory.decodeResource
+       //                 (getResources(), R.drawable.yael_element))
         .setSmallIcon(R.drawable.yael_element)
         .setContentText(message)
         .setDefaults(Notification.DEFAULT_ALL)
         .setAutoCancel(true)
-//        .setLargeIcon(BitmapFactory.decodeResource
-  //              (getResources(), R.drawable.yael_element))
-    //    .setBadgeIconType(R.drawable.yael_element)
+        .setBadgeIconType(R.drawable.yael_element)
         .setContentIntent(pendingIntent)
         .setSound(RingtoneManager.getDefaultUri
                 (RingtoneManager.TYPE_NOTIFICATION))

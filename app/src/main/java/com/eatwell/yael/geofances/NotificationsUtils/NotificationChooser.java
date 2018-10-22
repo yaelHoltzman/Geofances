@@ -7,7 +7,7 @@ import com.eatwell.yael.geofances.UserPreferences.User;
 
 public class NotificationChooser {
 
-    static private FirebaseMessagingService fbms;
+    static private FirebaseMessagingService fbms = new FirebaseMessagingService();
 
     public static void SendNextNotification(String location, String geofenceTransition) {
         //create instance of user
@@ -22,10 +22,6 @@ public class NotificationChooser {
         String notification  = userGoal.GetNextNotification(location, geofenceTransition);
 
         //send notification to user
-        if (fbms == null) {
-            fbms = new FirebaseMessagingService();
-        }
-
-        fbms.SendNotification(user.getmContext().getString(R.string.pref_title_new_message_notifications), notification);
+        fbms.sendNotification(user.getmContext().getString(R.string.pref_title_new_message_notifications), notification);
     }
 }

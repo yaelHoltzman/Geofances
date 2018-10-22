@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.RelativeLayout;
+//import android.widget.RelativeLayout;
 import android.content.Intent;
 
 import com.eatwell.yael.geofances.R;
@@ -13,12 +13,12 @@ import com.eatwell.yael.geofances.UserPreferences.User;
 
 public class StartActivity extends AppCompatActivity {
 
-    private TextView login;
-    private TextView alreadySU;
-    private Button startButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        TextView login;
+        //TextView alreadySU;
+        Button startButton;
+
         super.onCreate(savedInstanceState);
 
         User user = User.getInstance();
@@ -26,14 +26,28 @@ public class StartActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_start);
 
-        login = (TextView)findViewById(R.id.logIn_text);
-        alreadySU = (TextView)findViewById(R.id.already_SU_text);
-        startButton = (Button)findViewById(R.id.start_button);
+        login = findViewById(R.id.logIn_text);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickLogin(v);
+            }
+        });
 
-        RelativeLayout layout = new RelativeLayout(this);
+        //alreadySU = findViewById(R.id.already_SU_text);
+
+        startButton = findViewById(R.id.start_button);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onStartClick(v);
+            }
+        });
+
+        //RelativeLayout layout = new RelativeLayout(this);
     }
 
-    public void onClick(View view) {
+    public void onStartClick(View view) {
         Intent intent = new Intent(this, SignUp.class);
         startActivity(intent);
     }

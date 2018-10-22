@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -25,22 +23,19 @@ import java.util.List;
 public class GeofenceManager {
 
     private static final String TAG = GeofenceManager.class.getSimpleName();
-    private GeofencingClient mGeofencingClient;
-
-    private static String GEOFENCE_REQ_ID;
-    private static final float GEOFENCE_RADIUS = 50.0f; // in meters
-    private static final long GEO_DURATION = 60 * 60 * 1000 * 24;
-    private PendingIntent geofencePendingIntent;
-    private final int GEOFENCE_REQ_CODE = 0;
     private static int numberOfGeofences = 0;
-    private static User user;
+
+    private GeofencingClient mGeofencingClient;
+    private String GEOFENCE_REQ_ID;
+    private PendingIntent geofencePendingIntent;
+    private User user;
     private Activity mActivity;
 
 
     public GeofenceManager(Activity mActivity, String geofenceId) {
         this.mActivity = mActivity;
         user = User.getInstance();
-        GEOFENCE_REQ_ID = "Home";//geofenceId;
+        GEOFENCE_REQ_ID = /*"Home"*/geofenceId;
         mGeofencingClient = LocationServices.getGeofencingClient(user.getmContext());
         Log.d(TAG, "init mGeofencingClient");
     }
@@ -49,13 +44,15 @@ public class GeofenceManager {
     private GeofencingRequest createGeofenceRequest( Geofence geofence ) {
         Log.d(TAG, "createGeofenceRequest");
         return new GeofencingRequest.Builder()
-                .setInitialTrigger( GeofencingRequest. INITIAL_TRIGGER_DWELL)
+                .setInitialTrigger( GeofencingRequest. INITIAL_TRIGGER_EXIT)
                 .addGeofence( geofence )
                 .build();
     }
 
 
     private PendingIntent createGeofencePendingIntent() {
+        final int GEOFENCE_REQ_CODE = 0;
+
         Log.d(TAG, "createGeofencePendingIntent");
         if ( geofencePendingIntent!= null )
             return geofencePendingIntent;
@@ -67,9 +64,13 @@ public class GeofenceManager {
         return geofencePendingIntent;
     }
 
+
     // Create a Geofence
-    private Geofence createGeofence(LatLng latLng, float radius ) {
+    private Geofence createGeofence(LatLng latLng) {
         Log.d(TAG, "createGeofence");
+
+        final float GEOFENCE_RADIUS = 100.0f; // in meters
+        final long GEO_DURATION = 60 * 60 * 1000 * 24 * 7;
 
         return new Geofence.Builder()
                 // Set the request ID of the geofence. This is a string to identify this
@@ -79,7 +80,7 @@ public class GeofenceManager {
                 .setCircularRegion(
                         latLng.latitude,
                         latLng.longitude,
-                        radius
+                        GEOFENCE_RADIUS
                         //Constants.GEOFENCE_RADIUS_IN_METERS
                 )
                 .setExpirationDuration(/*GEOFENCE_EXPIRATION_IN_MILLISECONDS*/GEO_DURATION)
@@ -135,7 +136,7 @@ public class GeofenceManager {
     }
 
 
-
+/*
     public void clearAllGeofence() {
         mGeofencingClient.removeGeofences(createGeofencePendingIntent())
                 .addOnSuccessListener(mActivity, new OnSuccessListener<Void>() {
@@ -153,13 +154,15 @@ public class GeofenceManager {
                     }
                 });
     }
+*/
+
 
     // Start Geofence creation process
     public void startGeofence(Marker geoFenceMarker, Context context) {
         Log.i(TAG, "startGeofence()");
 
         if( geoFenceMarker != null ) {
-            Geofence geofence = createGeofence( geoFenceMarker.getPosition(), GEOFENCE_RADIUS );
+            Geofence geofence = createGeofence( geoFenceMarker.getPosition());
             GeofencingRequest geofenceRequest = createGeofenceRequest( geofence );
             addGeofence( geofenceRequest, context );
             saveGeofence(geoFenceMarker);
@@ -174,7 +177,6 @@ public class GeofenceManager {
         Log.d(TAG, "saveGeofence()");
 
         User user = User.getInstance();
-
         user.addLocation(GEOFENCE_REQ_ID, new LatLng(geoFenceMarker.getPosition().latitude, geoFenceMarker.getPosition().longitude));
     }
 }

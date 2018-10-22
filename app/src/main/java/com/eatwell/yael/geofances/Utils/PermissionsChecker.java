@@ -23,7 +23,7 @@ public class PermissionsChecker {
 
     // Asks for permission
     public static void askLocationPermission(Activity activity) {
-        Log.d(TAG, "askPermission()");
+        Log.d(TAG, "askLocationPermission()");
         ActivityCompat.requestPermissions(activity,
                 new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
                 REQ_PERMISSION
@@ -31,10 +31,9 @@ public class PermissionsChecker {
     }
 
     // App cannot work without the permissions
-    private static void permissionsDenied() {
+    /*private static void permissionsDenied() {
         Log.w(TAG, "permissionsDenied()");
-        // TODO close app and warn user
-    }
 
+    }*/
 }
 

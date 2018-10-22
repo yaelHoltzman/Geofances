@@ -171,5 +171,6 @@
     <string name="database_imageurl_rootName">ImagesUrls</string>
     <string name="change_wallpaper">change wallpaper</string>
     <string name="send_notification">Send notification</string>
+    <string name="goal_setting_text">Choose the goals of interest in order to get personalized content</string>
 
 </resources>

@@ -22,7 +22,7 @@ public class Home extends AppCompatActivity {
             user.setFirstRun(false);
         }
 
-        TextView testText = (TextView)findViewById(R.id.testTextView);
+        TextView testText = /*(TextView)*/findViewById(R.id.testTextView);
         testText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
